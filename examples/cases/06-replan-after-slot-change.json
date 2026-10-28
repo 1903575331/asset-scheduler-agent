@@ -1,0 +1,51 @@
+{
+  "case_id": "06-replan-after-slot-change",
+  "title": "更换占用时段后重复提交：重规划并替换旧草稿",
+  "acceptance": [
+    "时段冲突",
+    "重复提交",
+    "动态重规划"
+  ],
+  "phases": [
+    {
+      "request": {
+        "request_id": "r-06-replan-1",
+        "asset_ids": [
+          "M01"
+        ],
+        "user_message": "M01 今天 18:00 抖音。"
+      }
+    },
+    {
+      "data": {
+        "schedule_extra_bookings": [
+          {
+            "date": "2026-11-02",
+            "channel": "抖音",
+            "time": "19:00",
+            "asset_id": "M77",
+            "title": "被占用的 19:00（18:00 之外的新增占用）"
+          }
+        ]
+      },
+      "request": {
+        "request_id": "r-06-replan-2",
+        "asset_ids": [
+          "M01"
+        ],
+        "user_message": "M01 今天 18:00 抖音（19:00 也被别人占了，再排一次）。"
+      }
+    }
+  ],
+  "expect": {
+    "assets_count": 2,
+    "review_status": "approved",
+    "draft_status": "saved",
+    "suggested_date": "2026-11-02",
+    "suggested_time": "20:00",
+    "task_status": "completed_pending_confirmation",
+    "published": false,
+    "drafts_active": 1,
+    "superseded_count": 1
+  }
+}

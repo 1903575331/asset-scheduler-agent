@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Local env / secrets (never commit)
+.env
+
+# Runtime draft state
+.runtime/
+.runtime-test/
+.runtime-smoke/
+.tmp-tests/
+
+# Generated example scratch state (real outputs/traces ARE committed)
+examples/.run/
+examples/.state/
+
+# Local archives
+*.zip
+*.bundle
+
+# OS noise
+.DS_Store
+Thumbs.db

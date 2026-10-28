@@ -1,0 +1,188 @@
+{
+  "case_id": "13-step-limit-incomplete",
+  "title": "执行上限：达到步数上限 → 明确返回未完成",
+  "generated_at": "2026-10-28T08:46:06+00:00",
+  "model": {
+    "backend": "offline-policy-mock",
+    "notice": null
+  },
+  "requests": [
+    {
+      "request_id": "r-13-step-limit",
+      "asset_ids": [
+        "M01"
+      ],
+      "user_message": "M01 今天 18:00 抖音。",
+      "mode": "asset",
+      "limit": 10,
+      "source": "13-step-limit-incomplete"
+    }
+  ],
+  "run_options": {
+    "max_steps": 2
+  },
+  "runs": [
+    {
+      "run_id": "run-ea83fa47c9e4",
+      "request": {
+        "request_id": "r-13-step-limit",
+        "asset_ids": [
+          "M01"
+        ],
+        "user_message": "M01 今天 18:00 抖音。",
+        "mode": "asset",
+        "limit": 10,
+        "source": "13-step-limit-incomplete"
+      },
+      "model": "offline-policy-mock",
+      "started_at": "2026-10-28T08:46:06+00:00",
+      "finished_at": "2026-10-28T08:46:06+00:00",
+      "duration_ms": 0,
+      "status": "incomplete",
+      "status_reason": "达到步数上限 2，任务未完成。",
+      "limits": {
+        "max_steps": 2,
+        "max_tool_calls": 16,
+        "steps_used": 2,
+        "tool_calls_used": 2
+      },
+      "steps": [
+        {
+          "index": 1,
+          "reason": "尚未读取素材 M01 的元数据与发布要求，先补全事实。",
+          "action": "tool",
+          "tool": "get_asset",
+          "args": {
+            "asset_id": "M01"
+          },
+          "result_ok": true,
+          "result_summary": "读取素材 M01（城市夜景 15s 竖版，video）；缺失字段：无",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 check_review_rules"
+        },
+        {
+          "index": 2,
+          "reason": "排期前先按规则检查风险。",
+          "action": "tool",
+          "tool": "check_review_rules",
+          "args": {
+            "asset_id": "M01"
+          },
+          "result_ok": true,
+          "result_summary": "审核检查：阻断 0 项；待确认 0 项",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束（incomplete）"
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "M01",
+          "title": "城市夜景 15s 竖版",
+          "review_status": "approved",
+          "risk_reasons": [],
+          "suggested_slot": null,
+          "pending_confirmations": [],
+          "draft_status": "not_attempted",
+          "draft_id": null,
+          "draft_error": null,
+          "task_status": "incomplete",
+          "status_reason": "达到步数上限 2，任务未完成。",
+          "published": false,
+          "steps_used": 2,
+          "tool_calls": 2
+        }
+      ],
+      "discovered_assets": [],
+      "published": false
+    }
+  ],
+  "assets": [
+    {
+      "asset_id": "M01",
+      "title": "城市夜景 15s 竖版",
+      "review_status": "approved",
+      "risk_reasons": [],
+      "suggested_slot": null,
+      "pending_confirmations": [],
+      "draft_status": "not_attempted",
+      "draft_id": null,
+      "draft_error": null,
+      "task_status": "incomplete",
+      "status_reason": "达到步数上限 2，任务未完成。",
+      "published": false,
+      "steps_used": 2,
+      "tool_calls": 2
+    }
+  ],
+  "summary": {
+    "runs": 1,
+    "assets": 1,
+    "task_status": {
+      "incomplete": 1
+    },
+    "review_status": {
+      "approved": 1
+    },
+    "draft_saved": 0,
+    "pending_confirmation": 0,
+    "run_status": {
+      "incomplete": 1
+    },
+    "published": false
+  },
+  "published": false,
+  "checks": [
+    {
+      "field": "assets_count",
+      "expected": 1,
+      "actual": 1,
+      "ok": true
+    },
+    {
+      "field": "review_status",
+      "expected": "approved",
+      "actual": "approved",
+      "ok": true
+    },
+    {
+      "field": "draft_status",
+      "expected": "not_attempted",
+      "actual": "not_attempted",
+      "ok": true
+    },
+    {
+      "field": "task_status",
+      "expected": "incomplete",
+      "actual": "incomplete",
+      "ok": true
+    },
+    {
+      "field": "run_status_last",
+      "expected": "incomplete",
+      "actual": "incomplete",
+      "ok": true
+    },
+    {
+      "field": "published",
+      "expected": false,
+      "actual": false,
+      "ok": true
+    },
+    {
+      "field": "drafts_active",
+      "expected": 0,
+      "actual": 0,
+      "ok": true
+    }
+  ],
+  "trace_files": [
+    "examples/traces/13-step-limit-incomplete.md",
+    "examples/traces/13-step-limit-incomplete.json"
+  ],
+  "acceptance": [
+    "执行上限",
+    "未完成状态"
+  ]
+}

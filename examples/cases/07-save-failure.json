@@ -1,0 +1,23 @@
+{
+  "case_id": "07-save-failure",
+  "title": "保存失败：明确返回失败，不虚报成功",
+  "acceptance": [
+    "保存失败"
+  ],
+  "request": {
+    "request_id": "r-07-save-fail",
+    "asset_ids": [
+      "M05"
+    ],
+    "user_message": "M05 排到 2026-11-03 11:00。"
+  },
+  "expect": {
+    "assets_count": 1,
+    "review_status": "approved",
+    "draft_status": "failed",
+    "task_status": "failed",
+    "published": false,
+    "drafts_active": 0,
+    "pending_contains": "草稿未保存"
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "case_id": "09-no-available-slot",
+  "title": "时段冲突：当天已排满 → 未完成并请求确认",
+  "generated_at": "2026-10-28T08:46:06+00:00",
+  "model": {
+    "backend": "offline-policy-mock",
+    "notice": null
+  },
+  "requests": [
+    {
+      "request_id": "r-09-no-slot",
+      "asset_ids": [
+        "M09"
+      ],
+      "user_message": "M09 排 2026-11-06 15:00。",
+      "mode": "asset",
+      "limit": 10,
+      "source": "09-no-available-slot"
+    }
+  ],
+  "run_options": {},
+  "runs": [
+    {
+      "run_id": "run-b6098d535040",
+      "request": {
+        "request_id": "r-09-no-slot",
+        "asset_ids": [
+          "M09"
+        ],
+        "user_message": "M09 排 2026-11-06 15:00。",
+        "mode": "asset",
+        "limit": 10,
+        "source": "09-no-available-slot"
+      },
+      "model": "offline-policy-mock",
+      "started_at": "2026-10-28T08:46:06+00:00",
+      "finished_at": "2026-10-28T08:46:06+00:00",
+      "duration_ms": 0,
+      "status": "completed",
+      "status_reason": "素材 M09 当天无可用时段，需用户确认更换日期或放宽时段。",
+      "limits": {
+        "max_steps": 14,
+        "max_tool_calls": 16,
+        "steps_used": 4,
+        "tool_calls_used": 3
+      },
+      "steps": [
+        {
+          "index": 1,
+          "reason": "尚未读取素材 M09 的元数据与发布要求，先补全事实。",
+          "action": "tool",
+          "tool": "get_asset",
+          "args": {
+            "asset_id": "M09"
+          },
+          "result_ok": true,
+          "result_summary": "读取素材 M09（双十一战报 20s 竖版，video）；缺失字段：无",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 check_review_rules"
+        },
+        {
+          "index": 2,
+          "reason": "排期前先按规则检查风险。",
+          "action": "tool",
+          "tool": "check_review_rules",
+          "args": {
+            "asset_id": "M09"
+          },
+          "result_ok": true,
+          "result_summary": "审核检查：阻断 0 项；待确认 0 项",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 query_publish_slots"
+        },
+        {
+          "index": 3,
+          "reason": "需要确认 2026-11-06 抖音 的实际占用情况，不能凭要求时间直接排期。",
+          "action": "tool",
+          "tool": "query_publish_slots",
+          "args": {
+            "date": "2026-11-06",
+            "channel": "抖音",
+            "asset_id": "M09"
+          },
+          "result_ok": true,
+          "result_summary": "时段查询 2026-11-06 抖音：占用 10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00, 17:00, 18:00, 19:00, 20:00, 21:00；可用 无",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束"
+        },
+        {
+          "index": 4,
+          "reason": "素材 M09 当天无可用时段，需用户确认更换日期或放宽时段。",
+          "action": "finish",
+          "tool": null,
+          "args": {},
+          "result_ok": null,
+          "result_summary": "结束：素材 M09 当天无可用时段，需用户确认更换日期或放宽时段。",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束（completed）"
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "M09",
+          "title": "双十一战报 20s 竖版",
+          "review_status": "approved",
+          "risk_reasons": [],
+          "suggested_slot": null,
+          "pending_confirmations": [
+            "当天无可用时段：请确认是否更换发布日期或放宽时段？"
+          ],
+          "draft_status": "not_attempted",
+          "draft_id": null,
+          "draft_error": null,
+          "task_status": "blocked",
+          "status_reason": "当天无可用发布时段，需用户确认更换日期或放宽时段。",
+          "published": false,
+          "steps_used": 4,
+          "tool_calls": 3
+        }
+      ],
+      "discovered_assets": [],
+      "published": false
+    }
+  ],
+  "assets": [
+    {
+      "asset_id": "M09",
+      "title": "双十一战报 20s 竖版",
+      "review_status": "approved",
+      "risk_reasons": [],
+      "suggested_slot": null,
+      "pending_confirmations": [
+        "当天无可用时段：请确认是否更换发布日期或放宽时段？"
+      ],
+      "draft_status": "not_attempted",
+      "draft_id": null,
+      "draft_error": null,
+      "task_status": "blocked",
+      "status_reason": "当天无可用发布时段，需用户确认更换日期或放宽时段。",
+      "published": false,
+      "steps_used": 4,
+      "tool_calls": 3
+    }
+  ],
+  "summary": {
+    "runs": 1,
+    "assets": 1,
+    "task_status": {
+      "blocked": 1
+    },
+    "review_status": {
+      "approved": 1
+    },
+    "draft_saved": 0,
+    "pending_confirmation": 1,
+    "run_status": {
+      "completed": 1
+    },
+    "published": false
+  },
+  "published": false,
+  "checks": [
+    {
+      "field": "assets_count",
+      "expected": 1,
+      "actual": 1,
+      "ok": true
+    },
+    {
+      "field": "review_status",
+      "expected": "approved",
+      "actual": "approved",
+      "ok": true
+    },
+    {
+      "field": "draft_status",
+      "expected": "not_attempted",
+      "actual": "not_attempted",
+      "ok": true
+    },
+    {
+      "field": "suggested_time",
+      "expected": null,
+      "actual": null,
+      "ok": true
+    },
+    {
+      "field": "task_status",
+      "expected": "blocked",
+      "actual": "blocked",
+      "ok": true
+    },
+    {
+      "field": "published",
+      "expected": false,
+      "actual": false,
+      "ok": true
+    },
+    {
+      "field": "drafts_active",
+      "expected": 0,
+      "actual": 0,
+      "ok": true
+    },
+    {
+      "field": "pending_contains",
+      "expected": "无可用时段",
+      "actual": "无可用时段",
+      "ok": true
+    }
+  ],
+  "trace_files": [
+    "examples/traces/09-no-available-slot.md",
+    "examples/traces/09-no-available-slot.json"
+  ],
+  "acceptance": [
+    "时段冲突"
+  ]
+}

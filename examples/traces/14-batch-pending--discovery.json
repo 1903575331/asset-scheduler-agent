@@ -1,0 +1,67 @@
+{
+  "run": {
+    "run_id": "run-a363367af34c",
+    "request": {
+      "request_id": "r-14-batch",
+      "asset_ids": [],
+      "user_message": "把待处理素材都排一下。",
+      "mode": "pending",
+      "limit": 10,
+      "source": "14-batch-pending"
+    },
+    "model": "offline-policy-mock",
+    "started_at": "2026-10-28T08:46:06+00:00",
+    "finished_at": "2026-10-28T08:46:06+00:00",
+    "duration_ms": 0,
+    "status": "completed",
+    "status_reason": "已发现待处理素材（M01, M02, M03, M04, M05, M06, M07, M08, M09, M10），交由调用方逐项排期。",
+    "limits": {
+      "max_steps": 14,
+      "max_tool_calls": 16,
+      "steps_used": 2,
+      "tool_calls_used": 1
+    },
+    "steps": [
+      {
+        "index": 1,
+        "reason": "用户要求处理待审素材，先列出清单以确定处理范围。",
+        "action": "tool",
+        "tool": "list_pending_assets",
+        "args": {
+          "limit": 10
+        },
+        "result_ok": true,
+        "result_summary": "待处理素材 10 个：M01, M02, M03, M04, M05, M06, M07, M08, M09, M10",
+        "error_code": null,
+        "duration_ms": 0,
+        "next_action": "结束"
+      },
+      {
+        "index": 2,
+        "reason": "已发现待处理素材（M01, M02, M03, M04, M05, M06, M07, M08, M09, M10），交由调用方逐项排期。",
+        "action": "finish",
+        "tool": null,
+        "args": {},
+        "result_ok": null,
+        "result_summary": "结束：已发现待处理素材（M01, M02, M03, M04, M05, M06, M07, M08, M09, M10），交由调用方逐项排期。",
+        "error_code": null,
+        "duration_ms": 0,
+        "next_action": "结束（completed）"
+      }
+    ],
+    "assets": [],
+    "discovered_assets": [
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06",
+      "M07",
+      "M08",
+      "M09",
+      "M10"
+    ],
+    "published": false
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "case_id": "11-transient-save-retry",
+  "title": "可重试保存失败：观察失败后重试一次并成功（仍待确认）",
+  "acceptance": [
+    "保存失败",
+    "动态决策",
+    "确认边界"
+  ],
+  "request": {
+    "request_id": "r-11-retry",
+    "asset_ids": [
+      "M07"
+    ],
+    "user_message": "M07 排 2026-11-05 14:00。"
+  },
+  "expect": {
+    "assets_count": 1,
+    "review_status": "needs_confirmation",
+    "draft_status": "saved",
+    "suggested_time": "14:00",
+    "task_status": "completed_pending_confirmation",
+    "published": false,
+    "drafts_active": 1,
+    "save_tool_calls": 2,
+    "pending_contains": "促销"
+  }
+}

@@ -1,0 +1,234 @@
+{
+  "assets": [
+    {
+      "asset_id": "M01",
+      "title": "城市夜景 15s 竖版",
+      "asset_type": "video",
+      "owner": "内容组-小林",
+      "duration_sec": 15,
+      "aspect_ratio": "9:16",
+      "status": "pending_review",
+      "review": {
+        "copyright_cleared": true,
+        "music_licensed": true,
+        "sensitive_words": []
+      },
+      "publish_window": {
+        "date": "2026-11-02"
+      },
+      "publish_requirement": {
+        "channel": "抖音",
+        "flexibility": "preferred",
+        "requested_time": "18:00"
+      },
+      "notes": "跨年城市夜景素材，希望晚高峰发布。"
+    },
+    {
+      "asset_id": "M02",
+      "title": "新品开箱 30s 竖版",
+      "asset_type": "video",
+      "owner": null,
+      "duration_sec": null,
+      "aspect_ratio": "9:16",
+      "status": "pending_review",
+      "review": {
+        "copyright_cleared": true,
+        "music_licensed": true,
+        "sensitive_words": []
+      },
+      "publish_window": {
+        "date": null
+      },
+      "publish_requirement": {
+        "channel": "抖音",
+        "flexibility": "preferred",
+        "requested_time": "15:00"
+      },
+      "notes": "时长和发布日期还没给到，先别排。"
+    },
+    {
+      "asset_id": "M03",
+      "title": "爆款素材 15s 竖版",
+      "asset_type": "video",
+      "owner": "内容组-阿哲",
+      "duration_sec": 15,
+      "aspect_ratio": "9:16",
+      "status": "pending_review",
+      "review": {
+        "copyright_cleared": false,
+        "music_licensed": true,
+        "sensitive_words": ["全网最便宜"]
+      },
+      "publish_window": {
+        "date": "2026-11-02"
+      },
+      "publish_requirement": {
+        "channel": "抖音",
+        "flexibility": "preferred",
+        "requested_time": "16:00"
+      },
+      "notes": "搬运素材，版权未确认；标题含“全网最便宜”。"
+    },
+    {
+      "asset_id": "M04",
+      "title": "日常 Vlog 20s 竖版",
+      "asset_type": "video",
+      "owner": "内容组-小林",
+      "duration_sec": 20,
+      "aspect_ratio": "9:16",
+      "status": "pending_review",
+      "review": {
+        "copyright_cleared": true,
+        "music_licensed": true,
+        "sensitive_words": []
+      },
+      "publish_window": {
+        "date": "2026-11-03"
+      },
+      "publish_requirement": {
+        "channel": "抖音",
+        "flexibility": "preferred",
+        "requested_time": "10:00"
+      },
+      "notes": "普通日常素材。"
+    },
+    {
+      "asset_id": "M05",
+      "title": "产品功能演示 25s 竖版",
+      "asset_type": "video",
+      "owner": "内容组-阿哲",
+      "duration_sec": 25,
+      "aspect_ratio": "9:16",
+      "status": "pending_review",
+      "review": {
+        "copyright_cleared": true,
+        "music_licensed": true,
+        "sensitive_words": []
+      },
+      "publish_window": {
+        "date": "2026-11-03"
+      },
+      "publish_requirement": {
+        "channel": "抖音",
+        "flexibility": "preferred",
+        "requested_time": "11:00"
+      },
+      "notes": "该素材用于演示草稿存储持续失败场景（模拟故障）。"
+    },
+    {
+      "asset_id": "M06",
+      "title": "品牌 TVC 30s 竖版",
+      "asset_type": "video",
+      "owner": "品牌组-周周",
+      "duration_sec": 30,
+      "aspect_ratio": "9:16",
+      "status": "pending_review",
+      "review": {
+        "copyright_cleared": true,
+        "music_licensed": true,
+        "sensitive_words": []
+      },
+      "publish_window": {
+        "date": "2026-11-04"
+      },
+      "publish_requirement": {
+        "channel": "抖音",
+        "flexibility": "fixed",
+        "requested_time": "18:00"
+      },
+      "notes": "品牌方硬性要求 18:00 整点发布，不得擅自改时段。"
+    },
+    {
+      "asset_id": "M07",
+      "title": "限时活动预告 15s 竖版",
+      "asset_type": "video",
+      "owner": "内容组-小林",
+      "duration_sec": 15,
+      "aspect_ratio": "9:16",
+      "status": "pending_review",
+      "review": {
+        "copyright_cleared": true,
+        "music_licensed": true,
+        "sensitive_words": ["限时秒杀"]
+      },
+      "publish_window": {
+        "date": "2026-11-05"
+      },
+      "publish_requirement": {
+        "channel": "抖音",
+        "flexibility": "preferred",
+        "requested_time": "14:00"
+      },
+      "notes": "标题含促销词，需要人工确认；草稿存储首次调用失败（模拟故障），重试可成功。"
+    },
+    {
+      "asset_id": "M08",
+      "title": "节日祝福 10s 竖版",
+      "asset_type": "video",
+      "owner": "内容组-阿哲",
+      "duration_sec": 10,
+      "aspect_ratio": "9:16",
+      "status": "pending_review",
+      "review": {
+        "copyright_cleared": true,
+        "music_licensed": true,
+        "sensitive_words": []
+      },
+      "publish_window": {
+        "date": "2026-11-05"
+      },
+      "publish_requirement": {
+        "channel": "视频号",
+        "flexibility": "open",
+        "requested_time": null
+      },
+      "notes": "没有指定发布时间，由 Agent 选择可用时段。"
+    },
+    {
+      "asset_id": "M09",
+      "title": "双十一战报 20s 竖版",
+      "asset_type": "video",
+      "owner": "电商组-阿凯",
+      "duration_sec": 20,
+      "aspect_ratio": "9:16",
+      "status": "pending_review",
+      "review": {
+        "copyright_cleared": true,
+        "music_licensed": true,
+        "sensitive_words": []
+      },
+      "publish_window": {
+        "date": "2026-11-06"
+      },
+      "publish_requirement": {
+        "channel": "抖音",
+        "flexibility": "preferred",
+        "requested_time": "15:00"
+      },
+      "notes": "当天时段已排满，用于演示无可用时段。"
+    },
+    {
+      "asset_id": "M10",
+      "title": "品牌故事 45s 竖版",
+      "asset_type": "video",
+      "owner": "品牌组-周周",
+      "duration_sec": 45,
+      "aspect_ratio": "9:16",
+      "status": "pending_review",
+      "review": {
+        "copyright_cleared": true,
+        "music_licensed": true,
+        "sensitive_words": []
+      },
+      "publish_window": {
+        "date": "2026-11-02"
+      },
+      "publish_requirement": {
+        "channel": "抖音",
+        "flexibility": "preferred",
+        "requested_time": "15:00"
+      },
+      "notes": "用于演示时段查询工具失败（模拟故障）。"
+    }
+  ]
+}

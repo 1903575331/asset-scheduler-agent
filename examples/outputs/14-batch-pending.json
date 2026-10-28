@@ -1,0 +1,1664 @@
+{
+  "case_id": "14-batch-pending",
+  "title": "批量：发现待审素材并逐项排期（含缺失/风险/冲突/失败）",
+  "generated_at": "2026-10-28T08:46:06+00:00",
+  "model": {
+    "backend": "offline-policy-mock",
+    "notice": null
+  },
+  "requests": [
+    {
+      "request_id": "r-14-batch",
+      "asset_ids": [],
+      "user_message": "把待处理素材都排一下。",
+      "mode": "pending",
+      "limit": 10,
+      "source": "14-batch-pending"
+    }
+  ],
+  "run_options": {},
+  "runs": [
+    {
+      "run_id": "run-a363367af34c",
+      "request": {
+        "request_id": "r-14-batch",
+        "asset_ids": [],
+        "user_message": "把待处理素材都排一下。",
+        "mode": "pending",
+        "limit": 10,
+        "source": "14-batch-pending"
+      },
+      "model": "offline-policy-mock",
+      "started_at": "2026-10-28T08:46:06+00:00",
+      "finished_at": "2026-10-28T08:46:06+00:00",
+      "duration_ms": 0,
+      "status": "completed",
+      "status_reason": "已发现待处理素材（M01, M02, M03, M04, M05, M06, M07, M08, M09, M10），交由调用方逐项排期。",
+      "limits": {
+        "max_steps": 14,
+        "max_tool_calls": 16,
+        "steps_used": 2,
+        "tool_calls_used": 1
+      },
+      "steps": [
+        {
+          "index": 1,
+          "reason": "用户要求处理待审素材，先列出清单以确定处理范围。",
+          "action": "tool",
+          "tool": "list_pending_assets",
+          "args": {
+            "limit": 10
+          },
+          "result_ok": true,
+          "result_summary": "待处理素材 10 个：M01, M02, M03, M04, M05, M06, M07, M08, M09, M10",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束"
+        },
+        {
+          "index": 2,
+          "reason": "已发现待处理素材（M01, M02, M03, M04, M05, M06, M07, M08, M09, M10），交由调用方逐项排期。",
+          "action": "finish",
+          "tool": null,
+          "args": {},
+          "result_ok": null,
+          "result_summary": "结束：已发现待处理素材（M01, M02, M03, M04, M05, M06, M07, M08, M09, M10），交由调用方逐项排期。",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束（completed）"
+        }
+      ],
+      "assets": [],
+      "discovered_assets": [
+        "M01",
+        "M02",
+        "M03",
+        "M04",
+        "M05",
+        "M06",
+        "M07",
+        "M08",
+        "M09",
+        "M10"
+      ],
+      "published": false
+    },
+    {
+      "run_id": "run-dafa56bfa43e",
+      "request": {
+        "request_id": "r-14-batch::M01",
+        "asset_ids": [
+          "M01"
+        ],
+        "user_message": "把待处理素材都排一下。",
+        "mode": "asset",
+        "limit": 1,
+        "source": "14-batch-pending"
+      },
+      "model": "offline-policy-mock",
+      "started_at": "2026-10-28T08:46:06+00:00",
+      "finished_at": "2026-10-28T08:46:06+00:00",
+      "duration_ms": 1,
+      "status": "completed",
+      "status_reason": "草稿 draft-0d4c9bf5e0 已保存，但存在待确认项（原要求 18:00 已被占用，是否同意改为 19:00？），未发布，等待用户确认。",
+      "limits": {
+        "max_steps": 14,
+        "max_tool_calls": 16,
+        "steps_used": 6,
+        "tool_calls_used": 5
+      },
+      "steps": [
+        {
+          "index": 1,
+          "reason": "尚未读取素材 M01 的元数据与发布要求，先补全事实。",
+          "action": "tool",
+          "tool": "get_asset",
+          "args": {
+            "asset_id": "M01"
+          },
+          "result_ok": true,
+          "result_summary": "读取素材 M01（城市夜景 15s 竖版，video）；缺失字段：无",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 check_review_rules"
+        },
+        {
+          "index": 2,
+          "reason": "排期前先按规则检查风险。",
+          "action": "tool",
+          "tool": "check_review_rules",
+          "args": {
+            "asset_id": "M01"
+          },
+          "result_ok": true,
+          "result_summary": "审核检查：阻断 0 项；待确认 0 项",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 query_publish_slots"
+        },
+        {
+          "index": 3,
+          "reason": "需要确认 2026-11-02 抖音 的实际占用情况，不能凭要求时间直接排期。",
+          "action": "tool",
+          "tool": "query_publish_slots",
+          "args": {
+            "date": "2026-11-02",
+            "channel": "抖音",
+            "asset_id": "M01"
+          },
+          "result_ok": true,
+          "result_summary": "时段查询 2026-11-02 抖音：占用 18:00；可用 10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00, 17:00, 19:00, 20:00, 21:00",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 save_schedule_draft"
+        },
+        {
+          "index": 4,
+          "reason": "请求时段 18:00 被占用，改用最近的可用时段 19:00，标记待确认。",
+          "action": "tool",
+          "tool": "save_schedule_draft",
+          "args": {
+            "asset_id": "M01",
+            "date": "2026-11-02",
+            "time": "19:00",
+            "channel": "抖音",
+            "decision_note": "请求时段 18:00 被占用，改用最近的可用时段 19:00，标记待确认。",
+            "open_questions": [
+              "原要求 18:00 已被占用，是否同意改为 19:00？"
+            ]
+          },
+          "result_ok": true,
+          "result_summary": "保存草稿 draft-0d4c9bf5e0（2026-11-02 19:00 抖音）；确认状态=pending_confirmation",
+          "error_code": null,
+          "duration_ms": 1,
+          "next_action": "调用 get_schedule_draft"
+        },
+        {
+          "index": 5,
+          "reason": "草稿已保存，读取一次以核验状态与确认标记。",
+          "action": "tool",
+          "tool": "get_schedule_draft",
+          "args": {
+            "draft_id": "draft-0d4c9bf5e0"
+          },
+          "result_ok": true,
+          "result_summary": "读取草稿 draft-0d4c9bf5e0：状态=draft，确认状态=pending_confirmation",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束"
+        },
+        {
+          "index": 6,
+          "reason": "草稿 draft-0d4c9bf5e0 已保存，但存在待确认项（原要求 18:00 已被占用，是否同意改为 19:00？），未发布，等待用户确认。",
+          "action": "finish",
+          "tool": null,
+          "args": {},
+          "result_ok": null,
+          "result_summary": "结束：草稿 draft-0d4c9bf5e0 已保存，但存在待确认项（原要求 18:00 已被占用，是否同意改为 19:00？），未发布，等待用户确认。",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束（completed）"
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "M01",
+          "title": "城市夜景 15s 竖版",
+          "review_status": "approved",
+          "risk_reasons": [],
+          "suggested_slot": {
+            "date": "2026-11-02",
+            "time": "19:00",
+            "channel": "抖音"
+          },
+          "pending_confirmations": [
+            "原要求 18:00 已被占用，是否同意改为 19:00？"
+          ],
+          "draft_status": "saved",
+          "draft_id": "draft-0d4c9bf5e0",
+          "draft_error": null,
+          "task_status": "completed_pending_confirmation",
+          "status_reason": "草稿 draft-0d4c9bf5e0 已保存，待用户确认后发布。",
+          "published": false,
+          "steps_used": 6,
+          "tool_calls": 5
+        }
+      ],
+      "discovered_assets": [],
+      "published": false
+    },
+    {
+      "run_id": "run-5dd5ba52d0e6",
+      "request": {
+        "request_id": "r-14-batch::M02",
+        "asset_ids": [
+          "M02"
+        ],
+        "user_message": "把待处理素材都排一下。",
+        "mode": "asset",
+        "limit": 1,
+        "source": "14-batch-pending"
+      },
+      "model": "offline-policy-mock",
+      "started_at": "2026-10-28T08:46:06+00:00",
+      "finished_at": "2026-10-28T08:46:06+00:00",
+      "duration_ms": 0,
+      "status": "completed",
+      "status_reason": "素材 M02 缺少必要字段（owner, duration_sec, publish_window.date），无法安全生成排期，需先补充信息。",
+      "limits": {
+        "max_steps": 14,
+        "max_tool_calls": 16,
+        "steps_used": 2,
+        "tool_calls_used": 1
+      },
+      "steps": [
+        {
+          "index": 1,
+          "reason": "尚未读取素材 M02 的元数据与发布要求，先补全事实。",
+          "action": "tool",
+          "tool": "get_asset",
+          "args": {
+            "asset_id": "M02"
+          },
+          "result_ok": true,
+          "result_summary": "读取素材 M02（新品开箱 30s 竖版，video）；缺失字段：owner, duration_sec, publish_window.date",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束"
+        },
+        {
+          "index": 2,
+          "reason": "素材 M02 缺少必要字段（owner, duration_sec, publish_window.date），无法安全生成排期，需先补充信息。",
+          "action": "finish",
+          "tool": null,
+          "args": {},
+          "result_ok": null,
+          "result_summary": "结束：素材 M02 缺少必要字段（owner, duration_sec, publish_window.date），无法安全生成排期，需先补充信息。",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束（completed）"
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "M02",
+          "title": "新品开箱 30s 竖版",
+          "review_status": "needs_input",
+          "risk_reasons": [
+            {
+              "rule_id": "R-MISS-01",
+              "name": "素材信息完整性",
+              "severity": "blocking",
+              "message": "排期必需字段缺失，必须先补齐。",
+              "evidence": {
+                "missing_fields": [
+                  "owner",
+                  "duration_sec",
+                  "publish_window.date"
+                ]
+              }
+            }
+          ],
+          "suggested_slot": null,
+          "pending_confirmations": [
+            "请补充素材信息：owner, duration_sec, publish_window.date。"
+          ],
+          "draft_status": "not_attempted",
+          "draft_id": null,
+          "draft_error": null,
+          "task_status": "needs_input",
+          "status_reason": "素材信息缺失：owner, duration_sec, publish_window.date。",
+          "published": false,
+          "steps_used": 2,
+          "tool_calls": 1
+        }
+      ],
+      "discovered_assets": [],
+      "published": false
+    },
+    {
+      "run_id": "run-4111b6a3e21c",
+      "request": {
+        "request_id": "r-14-batch::M03",
+        "asset_ids": [
+          "M03"
+        ],
+        "user_message": "把待处理素材都排一下。",
+        "mode": "asset",
+        "limit": 1,
+        "source": "14-batch-pending"
+      },
+      "model": "offline-policy-mock",
+      "started_at": "2026-10-28T08:46:06+00:00",
+      "finished_at": "2026-10-28T08:46:06+00:00",
+      "duration_ms": 0,
+      "status": "completed",
+      "status_reason": "素材 M03 存在阻断级审核风险（R-COPY-01），不保存草稿，需先处理风险。",
+      "limits": {
+        "max_steps": 14,
+        "max_tool_calls": 16,
+        "steps_used": 3,
+        "tool_calls_used": 2
+      },
+      "steps": [
+        {
+          "index": 1,
+          "reason": "尚未读取素材 M03 的元数据与发布要求，先补全事实。",
+          "action": "tool",
+          "tool": "get_asset",
+          "args": {
+            "asset_id": "M03"
+          },
+          "result_ok": true,
+          "result_summary": "读取素材 M03（爆款素材 15s 竖版，video）；缺失字段：无",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 check_review_rules"
+        },
+        {
+          "index": 2,
+          "reason": "排期前先按规则检查风险。",
+          "action": "tool",
+          "tool": "check_review_rules",
+          "args": {
+            "asset_id": "M03"
+          },
+          "result_ok": true,
+          "result_summary": "审核检查：阻断 1 项（R-COPY-01）；待确认 1 项（R-SENS-01）",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束"
+        },
+        {
+          "index": 3,
+          "reason": "素材 M03 存在阻断级审核风险（R-COPY-01），不保存草稿，需先处理风险。",
+          "action": "finish",
+          "tool": null,
+          "args": {},
+          "result_ok": null,
+          "result_summary": "结束：素材 M03 存在阻断级审核风险（R-COPY-01），不保存草稿，需先处理风险。",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束（completed）"
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "M03",
+          "title": "爆款素材 15s 竖版",
+          "review_status": "blocked",
+          "risk_reasons": [
+            {
+              "rule_id": "R-COPY-01",
+              "name": "版权确认",
+              "severity": "blocking",
+              "message": "copyright_cleared 必须为 true，否则不得进入排期。",
+              "evidence": {
+                "copyright_cleared": false
+              }
+            },
+            {
+              "rule_id": "R-SENS-01",
+              "name": "促销/敏感词",
+              "severity": "warn",
+              "message": "标题或备注命中促销词/敏感词时，需人工确认后再发布。",
+              "evidence": {
+                "matched_words": [
+                  "全网最便宜"
+                ]
+              }
+            }
+          ],
+          "suggested_slot": null,
+          "pending_confirmations": [
+            "请先处理阻断风险 R-COPY-01（版权确认）：copyright_cleared=False；处理后再排期。"
+          ],
+          "draft_status": "not_attempted",
+          "draft_id": null,
+          "draft_error": null,
+          "task_status": "blocked",
+          "status_reason": "存在阻断级审核风险：R-COPY-01。",
+          "published": false,
+          "steps_used": 3,
+          "tool_calls": 2
+        }
+      ],
+      "discovered_assets": [],
+      "published": false
+    },
+    {
+      "run_id": "run-b5287947434b",
+      "request": {
+        "request_id": "r-14-batch::M04",
+        "asset_ids": [
+          "M04"
+        ],
+        "user_message": "把待处理素材都排一下。",
+        "mode": "asset",
+        "limit": 1,
+        "source": "14-batch-pending"
+      },
+      "model": "offline-policy-mock",
+      "started_at": "2026-10-28T08:46:06+00:00",
+      "finished_at": "2026-10-28T08:46:06+00:00",
+      "duration_ms": 1,
+      "status": "completed",
+      "status_reason": "草稿 draft-59adea9c0a 已保存，无待确认项，未发布。",
+      "limits": {
+        "max_steps": 14,
+        "max_tool_calls": 16,
+        "steps_used": 6,
+        "tool_calls_used": 5
+      },
+      "steps": [
+        {
+          "index": 1,
+          "reason": "尚未读取素材 M04 的元数据与发布要求，先补全事实。",
+          "action": "tool",
+          "tool": "get_asset",
+          "args": {
+            "asset_id": "M04"
+          },
+          "result_ok": true,
+          "result_summary": "读取素材 M04（日常 Vlog 20s 竖版，video）；缺失字段：无",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 check_review_rules"
+        },
+        {
+          "index": 2,
+          "reason": "排期前先按规则检查风险。",
+          "action": "tool",
+          "tool": "check_review_rules",
+          "args": {
+            "asset_id": "M04"
+          },
+          "result_ok": true,
+          "result_summary": "审核检查：阻断 0 项；待确认 0 项",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 query_publish_slots"
+        },
+        {
+          "index": 3,
+          "reason": "需要确认 2026-11-03 抖音 的实际占用情况，不能凭要求时间直接排期。",
+          "action": "tool",
+          "tool": "query_publish_slots",
+          "args": {
+            "date": "2026-11-03",
+            "channel": "抖音",
+            "asset_id": "M04"
+          },
+          "result_ok": true,
+          "result_summary": "时段查询 2026-11-03 抖音：占用 12:00；可用 10:00, 11:00, 13:00, 14:00, 15:00, 16:00, 17:00, 18:00, 19:00, 20:00, 21:00",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 save_schedule_draft"
+        },
+        {
+          "index": 4,
+          "reason": "请求时段 10:00 空闲，按用户要求保存草稿。",
+          "action": "tool",
+          "tool": "save_schedule_draft",
+          "args": {
+            "asset_id": "M04",
+            "date": "2026-11-03",
+            "time": "10:00",
+            "channel": "抖音",
+            "decision_note": "请求时段 10:00 空闲，按用户要求保存草稿。",
+            "open_questions": []
+          },
+          "result_ok": true,
+          "result_summary": "保存草稿 draft-59adea9c0a（2026-11-03 10:00 抖音）；确认状态=not_required",
+          "error_code": null,
+          "duration_ms": 1,
+          "next_action": "调用 get_schedule_draft"
+        },
+        {
+          "index": 5,
+          "reason": "草稿已保存，读取一次以核验状态与确认标记。",
+          "action": "tool",
+          "tool": "get_schedule_draft",
+          "args": {
+            "draft_id": "draft-59adea9c0a"
+          },
+          "result_ok": true,
+          "result_summary": "读取草稿 draft-59adea9c0a：状态=draft，确认状态=not_required",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束"
+        },
+        {
+          "index": 6,
+          "reason": "草稿 draft-59adea9c0a 已保存，无待确认项，未发布。",
+          "action": "finish",
+          "tool": null,
+          "args": {},
+          "result_ok": null,
+          "result_summary": "结束：草稿 draft-59adea9c0a 已保存，无待确认项，未发布。",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束（completed）"
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "M04",
+          "title": "日常 Vlog 20s 竖版",
+          "review_status": "approved",
+          "risk_reasons": [],
+          "suggested_slot": {
+            "date": "2026-11-03",
+            "time": "10:00",
+            "channel": "抖音"
+          },
+          "pending_confirmations": [],
+          "draft_status": "saved",
+          "draft_id": "draft-59adea9c0a",
+          "draft_error": null,
+          "task_status": "completed",
+          "status_reason": "草稿 draft-59adea9c0a 已保存，无需确认。",
+          "published": false,
+          "steps_used": 6,
+          "tool_calls": 5
+        }
+      ],
+      "discovered_assets": [],
+      "published": false
+    },
+    {
+      "run_id": "run-e7463b760455",
+      "request": {
+        "request_id": "r-14-batch::M05",
+        "asset_ids": [
+          "M05"
+        ],
+        "user_message": "把待处理素材都排一下。",
+        "mode": "asset",
+        "limit": 1,
+        "source": "14-batch-pending"
+      },
+      "model": "offline-policy-mock",
+      "started_at": "2026-10-28T08:46:06+00:00",
+      "finished_at": "2026-10-28T08:46:06+00:00",
+      "duration_ms": 1,
+      "status": "completed",
+      "status_reason": "草稿保存失败（DRAFT_STORE_UNAVAILABLE：草稿存储不可用（模拟故障）。），按实际结果报告失败。",
+      "limits": {
+        "max_steps": 14,
+        "max_tool_calls": 16,
+        "steps_used": 5,
+        "tool_calls_used": 4
+      },
+      "steps": [
+        {
+          "index": 1,
+          "reason": "尚未读取素材 M05 的元数据与发布要求，先补全事实。",
+          "action": "tool",
+          "tool": "get_asset",
+          "args": {
+            "asset_id": "M05"
+          },
+          "result_ok": true,
+          "result_summary": "读取素材 M05（产品功能演示 25s 竖版，video）；缺失字段：无",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 check_review_rules"
+        },
+        {
+          "index": 2,
+          "reason": "排期前先按规则检查风险。",
+          "action": "tool",
+          "tool": "check_review_rules",
+          "args": {
+            "asset_id": "M05"
+          },
+          "result_ok": true,
+          "result_summary": "审核检查：阻断 0 项；待确认 0 项",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 query_publish_slots"
+        },
+        {
+          "index": 3,
+          "reason": "需要确认 2026-11-03 抖音 的实际占用情况，不能凭要求时间直接排期。",
+          "action": "tool",
+          "tool": "query_publish_slots",
+          "args": {
+            "date": "2026-11-03",
+            "channel": "抖音",
+            "asset_id": "M05"
+          },
+          "result_ok": true,
+          "result_summary": "时段查询 2026-11-03 抖音：占用 10:00, 12:00；可用 11:00, 13:00, 14:00, 15:00, 16:00, 17:00, 18:00, 19:00, 20:00, 21:00",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 save_schedule_draft"
+        },
+        {
+          "index": 4,
+          "reason": "请求时段 11:00 空闲，按用户要求保存草稿。",
+          "action": "tool",
+          "tool": "save_schedule_draft",
+          "args": {
+            "asset_id": "M05",
+            "date": "2026-11-03",
+            "time": "11:00",
+            "channel": "抖音",
+            "decision_note": "请求时段 11:00 空闲，按用户要求保存草稿。",
+            "open_questions": []
+          },
+          "result_ok": false,
+          "result_summary": "DRAFT_STORE_UNAVAILABLE: 草稿存储不可用（模拟故障）。",
+          "error_code": "DRAFT_STORE_UNAVAILABLE",
+          "duration_ms": 1,
+          "next_action": "结束"
+        },
+        {
+          "index": 5,
+          "reason": "草稿保存失败（DRAFT_STORE_UNAVAILABLE：草稿存储不可用（模拟故障）。），按实际结果报告失败。",
+          "action": "finish",
+          "tool": null,
+          "args": {},
+          "result_ok": null,
+          "result_summary": "结束：草稿保存失败（DRAFT_STORE_UNAVAILABLE：草稿存储不可用（模拟故障）。），按实际结果报告失败。",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束（completed）"
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "M05",
+          "title": "产品功能演示 25s 竖版",
+          "review_status": "approved",
+          "risk_reasons": [],
+          "suggested_slot": {
+            "date": "2026-11-03",
+            "time": "11:00",
+            "channel": "抖音"
+          },
+          "pending_confirmations": [
+            "草稿未保存（DRAFT_STORE_UNAVAILABLE）：草稿存储不可用（模拟故障）。 请确认是否重试。"
+          ],
+          "draft_status": "failed",
+          "draft_id": null,
+          "draft_error": {
+            "code": "DRAFT_STORE_UNAVAILABLE",
+            "message": "草稿存储不可用（模拟故障）。",
+            "retryable": false,
+            "details": {
+              "asset_id": "M05",
+              "tool": "save",
+              "attempt": 1,
+              "injected": true
+            }
+          },
+          "task_status": "failed",
+          "status_reason": "草稿保存失败：DRAFT_STORE_UNAVAILABLE — 草稿存储不可用（模拟故障）。",
+          "published": false,
+          "steps_used": 5,
+          "tool_calls": 4
+        }
+      ],
+      "discovered_assets": [],
+      "published": false
+    },
+    {
+      "run_id": "run-b160f8efc81f",
+      "request": {
+        "request_id": "r-14-batch::M06",
+        "asset_ids": [
+          "M06"
+        ],
+        "user_message": "把待处理素材都排一下。",
+        "mode": "asset",
+        "limit": 1,
+        "source": "14-batch-pending"
+      },
+      "model": "offline-policy-mock",
+      "started_at": "2026-10-28T08:46:06+00:00",
+      "finished_at": "2026-10-28T08:46:06+00:00",
+      "duration_ms": 0,
+      "status": "completed",
+      "status_reason": "硬性发布要求 18:00 已被占用（已发布：品牌联名（M98）），未经用户同意不得改期，需用户决定。",
+      "limits": {
+        "max_steps": 14,
+        "max_tool_calls": 16,
+        "steps_used": 4,
+        "tool_calls_used": 3
+      },
+      "steps": [
+        {
+          "index": 1,
+          "reason": "尚未读取素材 M06 的元数据与发布要求，先补全事实。",
+          "action": "tool",
+          "tool": "get_asset",
+          "args": {
+            "asset_id": "M06"
+          },
+          "result_ok": true,
+          "result_summary": "读取素材 M06（品牌 TVC 30s 竖版，video）；缺失字段：无",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 check_review_rules"
+        },
+        {
+          "index": 2,
+          "reason": "排期前先按规则检查风险。",
+          "action": "tool",
+          "tool": "check_review_rules",
+          "args": {
+            "asset_id": "M06"
+          },
+          "result_ok": true,
+          "result_summary": "审核检查：阻断 0 项；待确认 0 项",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 query_publish_slots"
+        },
+        {
+          "index": 3,
+          "reason": "需要确认 2026-11-04 抖音 的实际占用情况，不能凭要求时间直接排期。",
+          "action": "tool",
+          "tool": "query_publish_slots",
+          "args": {
+            "date": "2026-11-04",
+            "channel": "抖音",
+            "asset_id": "M06"
+          },
+          "result_ok": true,
+          "result_summary": "时段查询 2026-11-04 抖音：占用 18:00；可用 10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00, 17:00, 19:00, 20:00, 21:00",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束"
+        },
+        {
+          "index": 4,
+          "reason": "硬性发布要求 18:00 已被占用（已发布：品牌联名（M98）），未经用户同意不得改期，需用户决定。",
+          "action": "finish",
+          "tool": null,
+          "args": {},
+          "result_ok": null,
+          "result_summary": "结束：硬性发布要求 18:00 已被占用（已发布：品牌联名（M98）），未经用户同意不得改期，需用户决定。",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束（completed）"
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "M06",
+          "title": "品牌 TVC 30s 竖版",
+          "review_status": "approved",
+          "risk_reasons": [],
+          "suggested_slot": null,
+          "pending_confirmations": [
+            "硬性要求 18:00 已被占用：请确认是否调整硬性发布要求（需业务方确认），或本期不排期？"
+          ],
+          "draft_status": "not_attempted",
+          "draft_id": null,
+          "draft_error": null,
+          "task_status": "blocked",
+          "status_reason": "硬性发布要求 18:00 已被占用，未经用户同意不得改期。",
+          "published": false,
+          "steps_used": 4,
+          "tool_calls": 3
+        }
+      ],
+      "discovered_assets": [],
+      "published": false
+    },
+    {
+      "run_id": "run-afab97a135c4",
+      "request": {
+        "request_id": "r-14-batch::M07",
+        "asset_ids": [
+          "M07"
+        ],
+        "user_message": "把待处理素材都排一下。",
+        "mode": "asset",
+        "limit": 1,
+        "source": "14-batch-pending"
+      },
+      "model": "offline-policy-mock",
+      "started_at": "2026-10-28T08:46:06+00:00",
+      "finished_at": "2026-10-28T08:46:06+00:00",
+      "duration_ms": 4,
+      "status": "completed",
+      "status_reason": "草稿 draft-8fb68a89a3 已保存，但存在待确认项（促销/敏感词（R-SENS-01）：命中词：限时秒杀；需人工确认后发布。），未发布，等待用户确认。",
+      "limits": {
+        "max_steps": 14,
+        "max_tool_calls": 16,
+        "steps_used": 7,
+        "tool_calls_used": 6
+      },
+      "steps": [
+        {
+          "index": 1,
+          "reason": "尚未读取素材 M07 的元数据与发布要求，先补全事实。",
+          "action": "tool",
+          "tool": "get_asset",
+          "args": {
+            "asset_id": "M07"
+          },
+          "result_ok": true,
+          "result_summary": "读取素材 M07（限时活动预告 15s 竖版，video）；缺失字段：无",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 check_review_rules"
+        },
+        {
+          "index": 2,
+          "reason": "排期前先按规则检查风险。",
+          "action": "tool",
+          "tool": "check_review_rules",
+          "args": {
+            "asset_id": "M07"
+          },
+          "result_ok": true,
+          "result_summary": "审核检查：阻断 0 项；待确认 1 项（R-SENS-01）",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 query_publish_slots"
+        },
+        {
+          "index": 3,
+          "reason": "需要确认 2026-11-05 抖音 的实际占用情况，不能凭要求时间直接排期。",
+          "action": "tool",
+          "tool": "query_publish_slots",
+          "args": {
+            "date": "2026-11-05",
+            "channel": "抖音",
+            "asset_id": "M07"
+          },
+          "result_ok": true,
+          "result_summary": "时段查询 2026-11-05 抖音：占用 无；可用 10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00, 17:00, 18:00, 19:00, 20:00, 21:00",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 save_schedule_draft"
+        },
+        {
+          "index": 4,
+          "reason": "请求时段 14:00 空闲，按用户要求保存草稿。",
+          "action": "tool",
+          "tool": "save_schedule_draft",
+          "args": {
+            "asset_id": "M07",
+            "date": "2026-11-05",
+            "time": "14:00",
+            "channel": "抖音",
+            "decision_note": "请求时段 14:00 空闲，按用户要求保存草稿。",
+            "open_questions": []
+          },
+          "result_ok": false,
+          "result_summary": "DRAFT_STORE_TIMEOUT: 草稿存储超时（模拟故障，重试可成功）。",
+          "error_code": "DRAFT_STORE_TIMEOUT",
+          "duration_ms": 1,
+          "next_action": "调用 save_schedule_draft"
+        },
+        {
+          "index": 5,
+          "reason": "保存失败属于可重试的存储错误，重试一次；若仍失败则如实报告。",
+          "action": "tool",
+          "tool": "save_schedule_draft",
+          "args": {
+            "asset_id": "M07",
+            "date": "2026-11-05",
+            "time": "14:00",
+            "channel": "抖音",
+            "decision_note": "上次保存失败，重试保存草稿（2026-11-05 14:00）。",
+            "open_questions": []
+          },
+          "result_ok": true,
+          "result_summary": "保存草稿 draft-8fb68a89a3（2026-11-05 14:00 抖音）；确认状态=pending_confirmation",
+          "error_code": null,
+          "duration_ms": 2,
+          "next_action": "调用 get_schedule_draft"
+        },
+        {
+          "index": 6,
+          "reason": "草稿已保存，读取一次以核验状态与确认标记。",
+          "action": "tool",
+          "tool": "get_schedule_draft",
+          "args": {
+            "draft_id": "draft-8fb68a89a3"
+          },
+          "result_ok": true,
+          "result_summary": "读取草稿 draft-8fb68a89a3：状态=draft，确认状态=pending_confirmation",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束"
+        },
+        {
+          "index": 7,
+          "reason": "草稿 draft-8fb68a89a3 已保存，但存在待确认项（促销/敏感词（R-SENS-01）：命中词：限时秒杀；需人工确认后发布。），未发布，等待用户确认。",
+          "action": "finish",
+          "tool": null,
+          "args": {},
+          "result_ok": null,
+          "result_summary": "结束：草稿 draft-8fb68a89a3 已保存，但存在待确认项（促销/敏感词（R-SENS-01）：命中词：限时秒杀；需人工确认后发布。），未发布，等待用户确认。",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束（completed）"
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "M07",
+          "title": "限时活动预告 15s 竖版",
+          "review_status": "needs_confirmation",
+          "risk_reasons": [
+            {
+              "rule_id": "R-SENS-01",
+              "name": "促销/敏感词",
+              "severity": "warn",
+              "message": "标题或备注命中促销词/敏感词时，需人工确认后再发布。",
+              "evidence": {
+                "matched_words": [
+                  "限时秒杀"
+                ]
+              }
+            }
+          ],
+          "suggested_slot": {
+            "date": "2026-11-05",
+            "time": "14:00",
+            "channel": "抖音"
+          },
+          "pending_confirmations": [
+            "促销/敏感词（R-SENS-01）：命中词：限时秒杀；需人工确认后发布。"
+          ],
+          "draft_status": "saved",
+          "draft_id": "draft-8fb68a89a3",
+          "draft_error": null,
+          "task_status": "completed_pending_confirmation",
+          "status_reason": "草稿 draft-8fb68a89a3 已保存，待用户确认后发布。",
+          "published": false,
+          "steps_used": 7,
+          "tool_calls": 6
+        }
+      ],
+      "discovered_assets": [],
+      "published": false
+    },
+    {
+      "run_id": "run-06bc6760921e",
+      "request": {
+        "request_id": "r-14-batch::M08",
+        "asset_ids": [
+          "M08"
+        ],
+        "user_message": "把待处理素材都排一下。",
+        "mode": "asset",
+        "limit": 1,
+        "source": "14-batch-pending"
+      },
+      "model": "offline-policy-mock",
+      "started_at": "2026-10-28T08:46:06+00:00",
+      "finished_at": "2026-10-28T08:46:06+00:00",
+      "duration_ms": 1,
+      "status": "completed",
+      "status_reason": "草稿 draft-713b31d045 已保存，无待确认项，未发布。",
+      "limits": {
+        "max_steps": 14,
+        "max_tool_calls": 16,
+        "steps_used": 6,
+        "tool_calls_used": 5
+      },
+      "steps": [
+        {
+          "index": 1,
+          "reason": "尚未读取素材 M08 的元数据与发布要求，先补全事实。",
+          "action": "tool",
+          "tool": "get_asset",
+          "args": {
+            "asset_id": "M08"
+          },
+          "result_ok": true,
+          "result_summary": "读取素材 M08（节日祝福 10s 竖版，video）；缺失字段：无",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 check_review_rules"
+        },
+        {
+          "index": 2,
+          "reason": "排期前先按规则检查风险。",
+          "action": "tool",
+          "tool": "check_review_rules",
+          "args": {
+            "asset_id": "M08"
+          },
+          "result_ok": true,
+          "result_summary": "审核检查：阻断 0 项；待确认 0 项",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 query_publish_slots"
+        },
+        {
+          "index": 3,
+          "reason": "需要确认 2026-11-05 视频号 的实际占用情况，不能凭要求时间直接排期。",
+          "action": "tool",
+          "tool": "query_publish_slots",
+          "args": {
+            "date": "2026-11-05",
+            "channel": "视频号",
+            "asset_id": "M08"
+          },
+          "result_ok": true,
+          "result_summary": "时段查询 2026-11-05 视频号：占用 无；可用 10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00, 17:00, 18:00, 19:00, 20:00, 21:00",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 save_schedule_draft"
+        },
+        {
+          "index": 4,
+          "reason": "用户未指定发布时间，选择当天最早可用时段 10:00。",
+          "action": "tool",
+          "tool": "save_schedule_draft",
+          "args": {
+            "asset_id": "M08",
+            "date": "2026-11-05",
+            "time": "10:00",
+            "channel": "视频号",
+            "decision_note": "open 要求：自动选择最早可用时段 10:00。",
+            "open_questions": []
+          },
+          "result_ok": true,
+          "result_summary": "保存草稿 draft-713b31d045（2026-11-05 10:00 视频号）；确认状态=not_required",
+          "error_code": null,
+          "duration_ms": 1,
+          "next_action": "调用 get_schedule_draft"
+        },
+        {
+          "index": 5,
+          "reason": "草稿已保存，读取一次以核验状态与确认标记。",
+          "action": "tool",
+          "tool": "get_schedule_draft",
+          "args": {
+            "draft_id": "draft-713b31d045"
+          },
+          "result_ok": true,
+          "result_summary": "读取草稿 draft-713b31d045：状态=draft，确认状态=not_required",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束"
+        },
+        {
+          "index": 6,
+          "reason": "草稿 draft-713b31d045 已保存，无待确认项，未发布。",
+          "action": "finish",
+          "tool": null,
+          "args": {},
+          "result_ok": null,
+          "result_summary": "结束：草稿 draft-713b31d045 已保存，无待确认项，未发布。",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束（completed）"
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "M08",
+          "title": "节日祝福 10s 竖版",
+          "review_status": "approved",
+          "risk_reasons": [],
+          "suggested_slot": {
+            "date": "2026-11-05",
+            "time": "10:00",
+            "channel": "视频号"
+          },
+          "pending_confirmations": [],
+          "draft_status": "saved",
+          "draft_id": "draft-713b31d045",
+          "draft_error": null,
+          "task_status": "completed",
+          "status_reason": "草稿 draft-713b31d045 已保存，无需确认。",
+          "published": false,
+          "steps_used": 6,
+          "tool_calls": 5
+        }
+      ],
+      "discovered_assets": [],
+      "published": false
+    },
+    {
+      "run_id": "run-9bd9c720379c",
+      "request": {
+        "request_id": "r-14-batch::M09",
+        "asset_ids": [
+          "M09"
+        ],
+        "user_message": "把待处理素材都排一下。",
+        "mode": "asset",
+        "limit": 1,
+        "source": "14-batch-pending"
+      },
+      "model": "offline-policy-mock",
+      "started_at": "2026-10-28T08:46:06+00:00",
+      "finished_at": "2026-10-28T08:46:06+00:00",
+      "duration_ms": 0,
+      "status": "completed",
+      "status_reason": "素材 M09 当天无可用时段，需用户确认更换日期或放宽时段。",
+      "limits": {
+        "max_steps": 14,
+        "max_tool_calls": 16,
+        "steps_used": 4,
+        "tool_calls_used": 3
+      },
+      "steps": [
+        {
+          "index": 1,
+          "reason": "尚未读取素材 M09 的元数据与发布要求，先补全事实。",
+          "action": "tool",
+          "tool": "get_asset",
+          "args": {
+            "asset_id": "M09"
+          },
+          "result_ok": true,
+          "result_summary": "读取素材 M09（双十一战报 20s 竖版，video）；缺失字段：无",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 check_review_rules"
+        },
+        {
+          "index": 2,
+          "reason": "排期前先按规则检查风险。",
+          "action": "tool",
+          "tool": "check_review_rules",
+          "args": {
+            "asset_id": "M09"
+          },
+          "result_ok": true,
+          "result_summary": "审核检查：阻断 0 项；待确认 0 项",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 query_publish_slots"
+        },
+        {
+          "index": 3,
+          "reason": "需要确认 2026-11-06 抖音 的实际占用情况，不能凭要求时间直接排期。",
+          "action": "tool",
+          "tool": "query_publish_slots",
+          "args": {
+            "date": "2026-11-06",
+            "channel": "抖音",
+            "asset_id": "M09"
+          },
+          "result_ok": true,
+          "result_summary": "时段查询 2026-11-06 抖音：占用 10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00, 17:00, 18:00, 19:00, 20:00, 21:00；可用 无",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束"
+        },
+        {
+          "index": 4,
+          "reason": "素材 M09 当天无可用时段，需用户确认更换日期或放宽时段。",
+          "action": "finish",
+          "tool": null,
+          "args": {},
+          "result_ok": null,
+          "result_summary": "结束：素材 M09 当天无可用时段，需用户确认更换日期或放宽时段。",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束（completed）"
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "M09",
+          "title": "双十一战报 20s 竖版",
+          "review_status": "approved",
+          "risk_reasons": [],
+          "suggested_slot": null,
+          "pending_confirmations": [
+            "当天无可用时段：请确认是否更换发布日期或放宽时段？"
+          ],
+          "draft_status": "not_attempted",
+          "draft_id": null,
+          "draft_error": null,
+          "task_status": "blocked",
+          "status_reason": "当天无可用发布时段，需用户确认更换日期或放宽时段。",
+          "published": false,
+          "steps_used": 4,
+          "tool_calls": 3
+        }
+      ],
+      "discovered_assets": [],
+      "published": false
+    },
+    {
+      "run_id": "run-7c671e3ee760",
+      "request": {
+        "request_id": "r-14-batch::M10",
+        "asset_ids": [
+          "M10"
+        ],
+        "user_message": "把待处理素材都排一下。",
+        "mode": "asset",
+        "limit": 1,
+        "source": "14-batch-pending"
+      },
+      "model": "offline-policy-mock",
+      "started_at": "2026-10-28T08:46:06+00:00",
+      "finished_at": "2026-10-28T08:46:06+00:00",
+      "duration_ms": 1,
+      "status": "completed",
+      "status_reason": "时段查询失败（SLOT_SERVICE_ERROR），无法确认可用时段，未保存草稿。",
+      "limits": {
+        "max_steps": 14,
+        "max_tool_calls": 16,
+        "steps_used": 4,
+        "tool_calls_used": 3
+      },
+      "steps": [
+        {
+          "index": 1,
+          "reason": "尚未读取素材 M10 的元数据与发布要求，先补全事实。",
+          "action": "tool",
+          "tool": "get_asset",
+          "args": {
+            "asset_id": "M10"
+          },
+          "result_ok": true,
+          "result_summary": "读取素材 M10（品牌故事 45s 竖版，video）；缺失字段：无",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 check_review_rules"
+        },
+        {
+          "index": 2,
+          "reason": "排期前先按规则检查风险。",
+          "action": "tool",
+          "tool": "check_review_rules",
+          "args": {
+            "asset_id": "M10"
+          },
+          "result_ok": true,
+          "result_summary": "审核检查：阻断 0 项；待确认 0 项",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "调用 query_publish_slots"
+        },
+        {
+          "index": 3,
+          "reason": "需要确认 2026-11-02 抖音 的实际占用情况，不能凭要求时间直接排期。",
+          "action": "tool",
+          "tool": "query_publish_slots",
+          "args": {
+            "date": "2026-11-02",
+            "channel": "抖音",
+            "asset_id": "M10"
+          },
+          "result_ok": false,
+          "result_summary": "SLOT_SERVICE_ERROR: 时段服务不可用（模拟故障）。",
+          "error_code": "SLOT_SERVICE_ERROR",
+          "duration_ms": 1,
+          "next_action": "结束"
+        },
+        {
+          "index": 4,
+          "reason": "时段查询失败（SLOT_SERVICE_ERROR），无法确认可用时段，未保存草稿。",
+          "action": "finish",
+          "tool": null,
+          "args": {},
+          "result_ok": null,
+          "result_summary": "结束：时段查询失败（SLOT_SERVICE_ERROR），无法确认可用时段，未保存草稿。",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束（completed）"
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "M10",
+          "title": "品牌故事 45s 竖版",
+          "review_status": "approved",
+          "risk_reasons": [],
+          "suggested_slot": null,
+          "pending_confirmations": [
+            "时段服务暂不可用，待恢复后重新排期。"
+          ],
+          "draft_status": "not_attempted",
+          "draft_id": null,
+          "draft_error": null,
+          "task_status": "failed",
+          "status_reason": "时段查询失败：SLOT_SERVICE_ERROR — 时段服务不可用（模拟故障）。",
+          "published": false,
+          "steps_used": 4,
+          "tool_calls": 3
+        }
+      ],
+      "discovered_assets": [],
+      "published": false
+    }
+  ],
+  "assets": [
+    {
+      "asset_id": "M01",
+      "title": "城市夜景 15s 竖版",
+      "review_status": "approved",
+      "risk_reasons": [],
+      "suggested_slot": {
+        "date": "2026-11-02",
+        "time": "19:00",
+        "channel": "抖音"
+      },
+      "pending_confirmations": [
+        "原要求 18:00 已被占用，是否同意改为 19:00？"
+      ],
+      "draft_status": "saved",
+      "draft_id": "draft-0d4c9bf5e0",
+      "draft_error": null,
+      "task_status": "completed_pending_confirmation",
+      "status_reason": "草稿 draft-0d4c9bf5e0 已保存，待用户确认后发布。",
+      "published": false,
+      "steps_used": 6,
+      "tool_calls": 5
+    },
+    {
+      "asset_id": "M02",
+      "title": "新品开箱 30s 竖版",
+      "review_status": "needs_input",
+      "risk_reasons": [
+        {
+          "rule_id": "R-MISS-01",
+          "name": "素材信息完整性",
+          "severity": "blocking",
+          "message": "排期必需字段缺失，必须先补齐。",
+          "evidence": {
+            "missing_fields": [
+              "owner",
+              "duration_sec",
+              "publish_window.date"
+            ]
+          }
+        }
+      ],
+      "suggested_slot": null,
+      "pending_confirmations": [
+        "请补充素材信息：owner, duration_sec, publish_window.date。"
+      ],
+      "draft_status": "not_attempted",
+      "draft_id": null,
+      "draft_error": null,
+      "task_status": "needs_input",
+      "status_reason": "素材信息缺失：owner, duration_sec, publish_window.date。",
+      "published": false,
+      "steps_used": 2,
+      "tool_calls": 1
+    },
+    {
+      "asset_id": "M03",
+      "title": "爆款素材 15s 竖版",
+      "review_status": "blocked",
+      "risk_reasons": [
+        {
+          "rule_id": "R-COPY-01",
+          "name": "版权确认",
+          "severity": "blocking",
+          "message": "copyright_cleared 必须为 true，否则不得进入排期。",
+          "evidence": {
+            "copyright_cleared": false
+          }
+        },
+        {
+          "rule_id": "R-SENS-01",
+          "name": "促销/敏感词",
+          "severity": "warn",
+          "message": "标题或备注命中促销词/敏感词时，需人工确认后再发布。",
+          "evidence": {
+            "matched_words": [
+              "全网最便宜"
+            ]
+          }
+        }
+      ],
+      "suggested_slot": null,
+      "pending_confirmations": [
+        "请先处理阻断风险 R-COPY-01（版权确认）：copyright_cleared=False；处理后再排期。"
+      ],
+      "draft_status": "not_attempted",
+      "draft_id": null,
+      "draft_error": null,
+      "task_status": "blocked",
+      "status_reason": "存在阻断级审核风险：R-COPY-01。",
+      "published": false,
+      "steps_used": 3,
+      "tool_calls": 2
+    },
+    {
+      "asset_id": "M04",
+      "title": "日常 Vlog 20s 竖版",
+      "review_status": "approved",
+      "risk_reasons": [],
+      "suggested_slot": {
+        "date": "2026-11-03",
+        "time": "10:00",
+        "channel": "抖音"
+      },
+      "pending_confirmations": [],
+      "draft_status": "saved",
+      "draft_id": "draft-59adea9c0a",
+      "draft_error": null,
+      "task_status": "completed",
+      "status_reason": "草稿 draft-59adea9c0a 已保存，无需确认。",
+      "published": false,
+      "steps_used": 6,
+      "tool_calls": 5
+    },
+    {
+      "asset_id": "M05",
+      "title": "产品功能演示 25s 竖版",
+      "review_status": "approved",
+      "risk_reasons": [],
+      "suggested_slot": {
+        "date": "2026-11-03",
+        "time": "11:00",
+        "channel": "抖音"
+      },
+      "pending_confirmations": [
+        "草稿未保存（DRAFT_STORE_UNAVAILABLE）：草稿存储不可用（模拟故障）。 请确认是否重试。"
+      ],
+      "draft_status": "failed",
+      "draft_id": null,
+      "draft_error": {
+        "code": "DRAFT_STORE_UNAVAILABLE",
+        "message": "草稿存储不可用（模拟故障）。",
+        "retryable": false,
+        "details": {
+          "asset_id": "M05",
+          "tool": "save",
+          "attempt": 1,
+          "injected": true
+        }
+      },
+      "task_status": "failed",
+      "status_reason": "草稿保存失败：DRAFT_STORE_UNAVAILABLE — 草稿存储不可用（模拟故障）。",
+      "published": false,
+      "steps_used": 5,
+      "tool_calls": 4
+    },
+    {
+      "asset_id": "M06",
+      "title": "品牌 TVC 30s 竖版",
+      "review_status": "approved",
+      "risk_reasons": [],
+      "suggested_slot": null,
+      "pending_confirmations": [
+        "硬性要求 18:00 已被占用：请确认是否调整硬性发布要求（需业务方确认），或本期不排期？"
+      ],
+      "draft_status": "not_attempted",
+      "draft_id": null,
+      "draft_error": null,
+      "task_status": "blocked",
+      "status_reason": "硬性发布要求 18:00 已被占用，未经用户同意不得改期。",
+      "published": false,
+      "steps_used": 4,
+      "tool_calls": 3
+    },
+    {
+      "asset_id": "M07",
+      "title": "限时活动预告 15s 竖版",
+      "review_status": "needs_confirmation",
+      "risk_reasons": [
+        {
+          "rule_id": "R-SENS-01",
+          "name": "促销/敏感词",
+          "severity": "warn",
+          "message": "标题或备注命中促销词/敏感词时，需人工确认后再发布。",
+          "evidence": {
+            "matched_words": [
+              "限时秒杀"
+            ]
+          }
+        }
+      ],
+      "suggested_slot": {
+        "date": "2026-11-05",
+        "time": "14:00",
+        "channel": "抖音"
+      },
+      "pending_confirmations": [
+        "促销/敏感词（R-SENS-01）：命中词：限时秒杀；需人工确认后发布。"
+      ],
+      "draft_status": "saved",
+      "draft_id": "draft-8fb68a89a3",
+      "draft_error": null,
+      "task_status": "completed_pending_confirmation",
+      "status_reason": "草稿 draft-8fb68a89a3 已保存，待用户确认后发布。",
+      "published": false,
+      "steps_used": 7,
+      "tool_calls": 6
+    },
+    {
+      "asset_id": "M08",
+      "title": "节日祝福 10s 竖版",
+      "review_status": "approved",
+      "risk_reasons": [],
+      "suggested_slot": {
+        "date": "2026-11-05",
+        "time": "10:00",
+        "channel": "视频号"
+      },
+      "pending_confirmations": [],
+      "draft_status": "saved",
+      "draft_id": "draft-713b31d045",
+      "draft_error": null,
+      "task_status": "completed",
+      "status_reason": "草稿 draft-713b31d045 已保存，无需确认。",
+      "published": false,
+      "steps_used": 6,
+      "tool_calls": 5
+    },
+    {
+      "asset_id": "M09",
+      "title": "双十一战报 20s 竖版",
+      "review_status": "approved",
+      "risk_reasons": [],
+      "suggested_slot": null,
+      "pending_confirmations": [
+        "当天无可用时段：请确认是否更换发布日期或放宽时段？"
+      ],
+      "draft_status": "not_attempted",
+      "draft_id": null,
+      "draft_error": null,
+      "task_status": "blocked",
+      "status_reason": "当天无可用发布时段，需用户确认更换日期或放宽时段。",
+      "published": false,
+      "steps_used": 4,
+      "tool_calls": 3
+    },
+    {
+      "asset_id": "M10",
+      "title": "品牌故事 45s 竖版",
+      "review_status": "approved",
+      "risk_reasons": [],
+      "suggested_slot": null,
+      "pending_confirmations": [
+        "时段服务暂不可用，待恢复后重新排期。"
+      ],
+      "draft_status": "not_attempted",
+      "draft_id": null,
+      "draft_error": null,
+      "task_status": "failed",
+      "status_reason": "时段查询失败：SLOT_SERVICE_ERROR — 时段服务不可用（模拟故障）。",
+      "published": false,
+      "steps_used": 4,
+      "tool_calls": 3
+    }
+  ],
+  "summary": {
+    "runs": 11,
+    "assets": 10,
+    "task_status": {
+      "completed_pending_confirmation": 2,
+      "needs_input": 1,
+      "blocked": 3,
+      "completed": 2,
+      "failed": 2
+    },
+    "review_status": {
+      "approved": 7,
+      "needs_input": 1,
+      "blocked": 1,
+      "needs_confirmation": 1
+    },
+    "draft_saved": 4,
+    "pending_confirmation": 8,
+    "run_status": {
+      "completed": 11
+    },
+    "published": false
+  },
+  "published": false,
+  "checks": [
+    {
+      "field": "assets_count",
+      "expected": 10,
+      "actual": 10,
+      "ok": true
+    },
+    {
+      "field": "drafts_active",
+      "expected": 4,
+      "actual": 4,
+      "ok": true
+    },
+    {
+      "field": "published",
+      "expected": false,
+      "actual": false,
+      "ok": true
+    }
+  ],
+  "trace_files": [
+    "examples/traces/14-batch-pending--discovery.md",
+    "examples/traces/14-batch-pending--discovery.json",
+    "examples/traces/14-batch-pending--M01.md",
+    "examples/traces/14-batch-pending--M01.json",
+    "examples/traces/14-batch-pending--M02.md",
+    "examples/traces/14-batch-pending--M02.json",
+    "examples/traces/14-batch-pending--M03.md",
+    "examples/traces/14-batch-pending--M03.json",
+    "examples/traces/14-batch-pending--M04.md",
+    "examples/traces/14-batch-pending--M04.json",
+    "examples/traces/14-batch-pending--M05.md",
+    "examples/traces/14-batch-pending--M05.json",
+    "examples/traces/14-batch-pending--M06.md",
+    "examples/traces/14-batch-pending--M06.json",
+    "examples/traces/14-batch-pending--M07.md",
+    "examples/traces/14-batch-pending--M07.json",
+    "examples/traces/14-batch-pending--M08.md",
+    "examples/traces/14-batch-pending--M08.json",
+    "examples/traces/14-batch-pending--M09.md",
+    "examples/traces/14-batch-pending--M09.json",
+    "examples/traces/14-batch-pending--M10.md",
+    "examples/traces/14-batch-pending--M10.json"
+  ],
+  "acceptance": [
+    "待处理素材发现",
+    "批量排期",
+    "全部验收点覆盖"
+  ]
+}

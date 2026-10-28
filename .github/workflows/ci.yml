@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: 测试（标准库 unittest，零第三方依赖）
+        run: python -m unittest discover -s tests -v
+
+      - name: 环境自检
+        run: python run.py doctor
+
+      - name: 生成全部示例并校验预期
+        run: python scripts/generate_examples.py
+
+      - name: 关键用例冒烟（时段冲突 → 待确认，不发布）
+        run: python run.py run --case examples/cases/04-slot-conflict-confirm.json --model mock --fresh

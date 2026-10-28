@@ -1,0 +1,112 @@
+{
+  "run": {
+    "run_id": "run-3eb85e2c04af",
+    "request": {
+      "request_id": "r-03-risk",
+      "asset_ids": [
+        "M03"
+      ],
+      "user_message": "M03 今天能排就排。",
+      "mode": "asset",
+      "limit": 10,
+      "source": "03-rule-risk-blocked"
+    },
+    "model": "offline-policy-mock",
+    "started_at": "2026-10-28T08:46:06+00:00",
+    "finished_at": "2026-10-28T08:46:06+00:00",
+    "duration_ms": 0,
+    "status": "completed",
+    "status_reason": "素材 M03 存在阻断级审核风险（R-COPY-01），不保存草稿，需先处理风险。",
+    "limits": {
+      "max_steps": 14,
+      "max_tool_calls": 16,
+      "steps_used": 3,
+      "tool_calls_used": 2
+    },
+    "steps": [
+      {
+        "index": 1,
+        "reason": "尚未读取素材 M03 的元数据与发布要求，先补全事实。",
+        "action": "tool",
+        "tool": "get_asset",
+        "args": {
+          "asset_id": "M03"
+        },
+        "result_ok": true,
+        "result_summary": "读取素材 M03（爆款素材 15s 竖版，video）；缺失字段：无",
+        "error_code": null,
+        "duration_ms": 0,
+        "next_action": "调用 check_review_rules"
+      },
+      {
+        "index": 2,
+        "reason": "排期前先按规则检查风险。",
+        "action": "tool",
+        "tool": "check_review_rules",
+        "args": {
+          "asset_id": "M03"
+        },
+        "result_ok": true,
+        "result_summary": "审核检查：阻断 1 项（R-COPY-01）；待确认 1 项（R-SENS-01）",
+        "error_code": null,
+        "duration_ms": 0,
+        "next_action": "结束"
+      },
+      {
+        "index": 3,
+        "reason": "素材 M03 存在阻断级审核风险（R-COPY-01），不保存草稿，需先处理风险。",
+        "action": "finish",
+        "tool": null,
+        "args": {},
+        "result_ok": null,
+        "result_summary": "结束：素材 M03 存在阻断级审核风险（R-COPY-01），不保存草稿，需先处理风险。",
+        "error_code": null,
+        "duration_ms": 0,
+        "next_action": "结束（completed）"
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "M03",
+        "title": "爆款素材 15s 竖版",
+        "review_status": "blocked",
+        "risk_reasons": [
+          {
+            "rule_id": "R-COPY-01",
+            "name": "版权确认",
+            "severity": "blocking",
+            "message": "copyright_cleared 必须为 true，否则不得进入排期。",
+            "evidence": {
+              "copyright_cleared": false
+            }
+          },
+          {
+            "rule_id": "R-SENS-01",
+            "name": "促销/敏感词",
+            "severity": "warn",
+            "message": "标题或备注命中促销词/敏感词时，需人工确认后再发布。",
+            "evidence": {
+              "matched_words": [
+                "全网最便宜"
+              ]
+            }
+          }
+        ],
+        "suggested_slot": null,
+        "pending_confirmations": [
+          "请先处理阻断风险 R-COPY-01（版权确认）：copyright_cleared=False；处理后再排期。"
+        ],
+        "draft_status": "not_attempted",
+        "draft_id": null,
+        "draft_error": null,
+        "task_status": "blocked",
+        "status_reason": "存在阻断级审核风险：R-COPY-01。",
+        "published": false,
+        "steps_used": 3,
+        "tool_calls": 2
+      }
+    ],
+    "discovered_assets": [],
+    "published": false
+  }
+}

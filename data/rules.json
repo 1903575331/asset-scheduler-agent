@@ -1,0 +1,35 @@
+{
+  "version": "2026.10",
+  "rules": [
+    {
+      "rule_id": "R-MISS-01",
+      "name": "素材信息完整性",
+      "severity": "blocking",
+      "description": "排期必需字段缺失时必须先补齐，不得推测。"
+    },
+    {
+      "rule_id": "R-COPY-01",
+      "name": "版权确认",
+      "severity": "blocking",
+      "description": "copyright_cleared 必须为 true，否则不得进入排期。"
+    },
+    {
+      "rule_id": "R-MUSIC-01",
+      "name": "音乐授权",
+      "severity": "blocking",
+      "description": "music_licensed 必须为 true，否则不得进入排期。"
+    },
+    {
+      "rule_id": "R-SENS-01",
+      "name": "促销/敏感词",
+      "severity": "warn",
+      "description": "标题或备注命中促销词/敏感词时，需人工确认后再发布。"
+    },
+    {
+      "rule_id": "R-RATIO-01",
+      "name": "画幅适配",
+      "severity": "warn",
+      "description": "竖版渠道建议使用 9:16 画幅。"
+    }
+  ]
+}

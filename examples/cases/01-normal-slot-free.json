@@ -1,0 +1,25 @@
+{
+  "case_id": "01-normal-slot-free",
+  "title": "正常排期：请求时段空闲",
+  "acceptance": [
+    "正常排期",
+    "草稿保存（非发布）"
+  ],
+  "request": {
+    "request_id": "r-01-normal",
+    "asset_ids": [
+      "M04"
+    ],
+    "user_message": "把 M04 排到 2026-11-03 10:00，抖音。"
+  },
+  "expect": {
+    "assets_count": 1,
+    "review_status": "approved",
+    "draft_status": "saved",
+    "suggested_date": "2026-11-03",
+    "suggested_time": "10:00",
+    "task_status": "completed",
+    "published": false,
+    "drafts_active": 1
+  }
+}

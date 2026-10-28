@@ -1,0 +1,20 @@
+{
+  "case_id": "14-batch-pending",
+  "title": "批量：发现待审素材并逐项排期（含缺失/风险/冲突/失败）",
+  "acceptance": [
+    "待处理素材发现",
+    "批量排期",
+    "全部验收点覆盖"
+  ],
+  "request": {
+    "request_id": "r-14-batch",
+    "mode": "pending",
+    "limit": 10,
+    "user_message": "把待处理素材都排一下。"
+  },
+  "expect": {
+    "assets_count": 10,
+    "drafts_active": 4,
+    "published": false
+  }
+}

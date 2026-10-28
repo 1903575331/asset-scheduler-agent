@@ -1,0 +1,215 @@
+{
+  "case_id": "02-missing-info",
+  "title": "素材信息缺失：先补信息再排期",
+  "generated_at": "2026-10-28T08:46:06+00:00",
+  "model": {
+    "backend": "offline-policy-mock",
+    "notice": null
+  },
+  "requests": [
+    {
+      "request_id": "r-02-missing",
+      "asset_ids": [
+        "M02"
+      ],
+      "user_message": "M02 排一下，时间看着办。",
+      "mode": "asset",
+      "limit": 10,
+      "source": "02-missing-info"
+    }
+  ],
+  "run_options": {},
+  "runs": [
+    {
+      "run_id": "run-88ed0bdeec83",
+      "request": {
+        "request_id": "r-02-missing",
+        "asset_ids": [
+          "M02"
+        ],
+        "user_message": "M02 排一下，时间看着办。",
+        "mode": "asset",
+        "limit": 10,
+        "source": "02-missing-info"
+      },
+      "model": "offline-policy-mock",
+      "started_at": "2026-10-28T08:46:06+00:00",
+      "finished_at": "2026-10-28T08:46:06+00:00",
+      "duration_ms": 0,
+      "status": "completed",
+      "status_reason": "素材 M02 缺少必要字段（owner, duration_sec, publish_window.date），无法安全生成排期，需先补充信息。",
+      "limits": {
+        "max_steps": 14,
+        "max_tool_calls": 16,
+        "steps_used": 2,
+        "tool_calls_used": 1
+      },
+      "steps": [
+        {
+          "index": 1,
+          "reason": "尚未读取素材 M02 的元数据与发布要求，先补全事实。",
+          "action": "tool",
+          "tool": "get_asset",
+          "args": {
+            "asset_id": "M02"
+          },
+          "result_ok": true,
+          "result_summary": "读取素材 M02（新品开箱 30s 竖版，video）；缺失字段：owner, duration_sec, publish_window.date",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束"
+        },
+        {
+          "index": 2,
+          "reason": "素材 M02 缺少必要字段（owner, duration_sec, publish_window.date），无法安全生成排期，需先补充信息。",
+          "action": "finish",
+          "tool": null,
+          "args": {},
+          "result_ok": null,
+          "result_summary": "结束：素材 M02 缺少必要字段（owner, duration_sec, publish_window.date），无法安全生成排期，需先补充信息。",
+          "error_code": null,
+          "duration_ms": 0,
+          "next_action": "结束（completed）"
+        }
+      ],
+      "assets": [
+        {
+          "asset_id": "M02",
+          "title": "新品开箱 30s 竖版",
+          "review_status": "needs_input",
+          "risk_reasons": [
+            {
+              "rule_id": "R-MISS-01",
+              "name": "素材信息完整性",
+              "severity": "blocking",
+              "message": "排期必需字段缺失，必须先补齐。",
+              "evidence": {
+                "missing_fields": [
+                  "owner",
+                  "duration_sec",
+                  "publish_window.date"
+                ]
+              }
+            }
+          ],
+          "suggested_slot": null,
+          "pending_confirmations": [
+            "请补充素材信息：owner, duration_sec, publish_window.date。"
+          ],
+          "draft_status": "not_attempted",
+          "draft_id": null,
+          "draft_error": null,
+          "task_status": "needs_input",
+          "status_reason": "素材信息缺失：owner, duration_sec, publish_window.date。",
+          "published": false,
+          "steps_used": 2,
+          "tool_calls": 1
+        }
+      ],
+      "discovered_assets": [],
+      "published": false
+    }
+  ],
+  "assets": [
+    {
+      "asset_id": "M02",
+      "title": "新品开箱 30s 竖版",
+      "review_status": "needs_input",
+      "risk_reasons": [
+        {
+          "rule_id": "R-MISS-01",
+          "name": "素材信息完整性",
+          "severity": "blocking",
+          "message": "排期必需字段缺失，必须先补齐。",
+          "evidence": {
+            "missing_fields": [
+              "owner",
+              "duration_sec",
+              "publish_window.date"
+            ]
+          }
+        }
+      ],
+      "suggested_slot": null,
+      "pending_confirmations": [
+        "请补充素材信息：owner, duration_sec, publish_window.date。"
+      ],
+      "draft_status": "not_attempted",
+      "draft_id": null,
+      "draft_error": null,
+      "task_status": "needs_input",
+      "status_reason": "素材信息缺失：owner, duration_sec, publish_window.date。",
+      "published": false,
+      "steps_used": 2,
+      "tool_calls": 1
+    }
+  ],
+  "summary": {
+    "runs": 1,
+    "assets": 1,
+    "task_status": {
+      "needs_input": 1
+    },
+    "review_status": {
+      "needs_input": 1
+    },
+    "draft_saved": 0,
+    "pending_confirmation": 1,
+    "run_status": {
+      "completed": 1
+    },
+    "published": false
+  },
+  "published": false,
+  "checks": [
+    {
+      "field": "assets_count",
+      "expected": 1,
+      "actual": 1,
+      "ok": true
+    },
+    {
+      "field": "review_status",
+      "expected": "needs_input",
+      "actual": "needs_input",
+      "ok": true
+    },
+    {
+      "field": "draft_status",
+      "expected": "not_attempted",
+      "actual": "not_attempted",
+      "ok": true
+    },
+    {
+      "field": "task_status",
+      "expected": "needs_input",
+      "actual": "needs_input",
+      "ok": true
+    },
+    {
+      "field": "published",
+      "expected": false,
+      "actual": false,
+      "ok": true
+    },
+    {
+      "field": "drafts_active",
+      "expected": 0,
+      "actual": 0,
+      "ok": true
+    },
+    {
+      "field": "pending_contains",
+      "expected": "请补充素材信息",
+      "actual": "请补充素材信息",
+      "ok": true
+    }
+  ],
+  "trace_files": [
+    "examples/traces/02-missing-info.md",
+    "examples/traces/02-missing-info.json"
+  ],
+  "acceptance": [
+    "素材信息缺失"
+  ]
+}

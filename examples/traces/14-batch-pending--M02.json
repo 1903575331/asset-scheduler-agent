@@ -1,0 +1,91 @@
+{
+  "run": {
+    "run_id": "run-5dd5ba52d0e6",
+    "request": {
+      "request_id": "r-14-batch::M02",
+      "asset_ids": [
+        "M02"
+      ],
+      "user_message": "把待处理素材都排一下。",
+      "mode": "asset",
+      "limit": 1,
+      "source": "14-batch-pending"
+    },
+    "model": "offline-policy-mock",
+    "started_at": "2026-10-28T08:46:06+00:00",
+    "finished_at": "2026-10-28T08:46:06+00:00",
+    "duration_ms": 0,
+    "status": "completed",
+    "status_reason": "素材 M02 缺少必要字段（owner, duration_sec, publish_window.date），无法安全生成排期，需先补充信息。",
+    "limits": {
+      "max_steps": 14,
+      "max_tool_calls": 16,
+      "steps_used": 2,
+      "tool_calls_used": 1
+    },
+    "steps": [
+      {
+        "index": 1,
+        "reason": "尚未读取素材 M02 的元数据与发布要求，先补全事实。",
+        "action": "tool",
+        "tool": "get_asset",
+        "args": {
+          "asset_id": "M02"
+        },
+        "result_ok": true,
+        "result_summary": "读取素材 M02（新品开箱 30s 竖版，video）；缺失字段：owner, duration_sec, publish_window.date",
+        "error_code": null,
+        "duration_ms": 0,
+        "next_action": "结束"
+      },
+      {
+        "index": 2,
+        "reason": "素材 M02 缺少必要字段（owner, duration_sec, publish_window.date），无法安全生成排期，需先补充信息。",
+        "action": "finish",
+        "tool": null,
+        "args": {},
+        "result_ok": null,
+        "result_summary": "结束：素材 M02 缺少必要字段（owner, duration_sec, publish_window.date），无法安全生成排期，需先补充信息。",
+        "error_code": null,
+        "duration_ms": 0,
+        "next_action": "结束（completed）"
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "M02",
+        "title": "新品开箱 30s 竖版",
+        "review_status": "needs_input",
+        "risk_reasons": [
+          {
+            "rule_id": "R-MISS-01",
+            "name": "素材信息完整性",
+            "severity": "blocking",
+            "message": "排期必需字段缺失，必须先补齐。",
+            "evidence": {
+              "missing_fields": [
+                "owner",
+                "duration_sec",
+                "publish_window.date"
+              ]
+            }
+          }
+        ],
+        "suggested_slot": null,
+        "pending_confirmations": [
+          "请补充素材信息：owner, duration_sec, publish_window.date。"
+        ],
+        "draft_status": "not_attempted",
+        "draft_id": null,
+        "draft_error": null,
+        "task_status": "needs_input",
+        "status_reason": "素材信息缺失：owner, duration_sec, publish_window.date。",
+        "published": false,
+        "steps_used": 2,
+        "tool_calls": 1
+      }
+    ],
+    "discovered_assets": [],
+    "published": false
+  }
+}

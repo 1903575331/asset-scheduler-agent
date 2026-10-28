@@ -1,0 +1,32 @@
+{
+  "case_id": "05-duplicate-submission",
+  "title": "重复提交：相同请求只产生一份草稿",
+  "acceptance": [
+    "重复提交"
+  ],
+  "requests": [
+    {
+      "request_id": "r-05-dup-1",
+      "asset_ids": [
+        "M04"
+      ],
+      "user_message": "M04 排到 2026-11-03 10:00。"
+    },
+    {
+      "request_id": "r-05-dup-2",
+      "asset_ids": [
+        "M04"
+      ],
+      "user_message": "M04 排到 2026-11-03 10:00。（重复提交）"
+    }
+  ],
+  "expect": {
+    "assets_count": 2,
+    "run_status_last": "completed",
+    "review_status": "approved",
+    "draft_status": "duplicate_existing",
+    "task_status": "completed",
+    "published": false,
+    "drafts_active": 1
+  }
+}

@@ -1,0 +1,13 @@
+[project]
+name = "asset-scheduler-agent"
+version = "1.0.0"
+description = "素材审核与发布排期 Agent（ReAct，只保存草稿、不发布）· 小影科技 2027 校招 AI Agent 笔试题 第 1 题"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.scripts]
+asset-scheduler-agent = "src.asset_scheduler.cli:main"
+
+[tool.setuptools]
+packages = ["src.asset_scheduler"]

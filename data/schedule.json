@@ -1,0 +1,33 @@
+{
+  "slots": {
+    "10:00": {"enabled": true},
+    "11:00": {"enabled": true},
+    "12:00": {"enabled": true},
+    "13:00": {"enabled": true},
+    "14:00": {"enabled": true},
+    "15:00": {"enabled": true},
+    "16:00": {"enabled": true},
+    "17:00": {"enabled": true},
+    "18:00": {"enabled": true},
+    "19:00": {"enabled": true},
+    "20:00": {"enabled": true},
+    "21:00": {"enabled": true}
+  },
+  "bookings": [
+    {"date": "2026-11-02", "channel": "抖音", "time": "18:00", "asset_id": "M99", "title": "已发布：周末预告"},
+    {"date": "2026-11-03", "channel": "抖音", "time": "12:00", "asset_id": "M97", "title": "已发布：午餐话题"},
+    {"date": "2026-11-04", "channel": "抖音", "time": "18:00", "asset_id": "M98", "title": "已发布：品牌联名"},
+    {"date": "2026-11-06", "channel": "抖音", "time": "10:00", "asset_id": "M90", "title": "已排期：战报预热"},
+    {"date": "2026-11-06", "channel": "抖音", "time": "11:00", "asset_id": "M91", "title": "已排期：战报预热 2"},
+    {"date": "2026-11-06", "channel": "抖音", "time": "12:00", "asset_id": "M92", "title": "已排期：午间"},
+    {"date": "2026-11-06", "channel": "抖音", "time": "13:00", "asset_id": "M93", "title": "已排期：午后"},
+    {"date": "2026-11-06", "channel": "抖音", "time": "14:00", "asset_id": "M94", "title": "已排期：下午"},
+    {"date": "2026-11-06", "channel": "抖音", "time": "15:00", "asset_id": "M95", "title": "已排期：下午 2"},
+    {"date": "2026-11-06", "channel": "抖音", "time": "16:00", "asset_id": "M96", "title": "已排期：傍晚"},
+    {"date": "2026-11-06", "channel": "抖音", "time": "17:00", "asset_id": "M81", "title": "已排期：晚高峰 1"},
+    {"date": "2026-11-06", "channel": "抖音", "time": "18:00", "asset_id": "M82", "title": "已排期：晚高峰 2"},
+    {"date": "2026-11-06", "channel": "抖音", "time": "19:00", "asset_id": "M83", "title": "已排期：晚间 1"},
+    {"date": "2026-11-06", "channel": "抖音", "time": "20:00", "asset_id": "M84", "title": "已排期：晚间 2"},
+    {"date": "2026-11-06", "channel": "抖音", "time": "21:00", "asset_id": "M85", "title": "已排期：晚间 3"}
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "case_id": "13-step-limit-incomplete",
+  "title": "执行上限：达到步数上限 → 明确返回未完成",
+  "acceptance": [
+    "执行上限",
+    "未完成状态"
+  ],
+  "run_options": {
+    "max_steps": 2
+  },
+  "request": {
+    "request_id": "r-13-step-limit",
+    "asset_ids": [
+      "M01"
+    ],
+    "user_message": "M01 今天 18:00 抖音。"
+  },
+  "expect": {
+    "assets_count": 1,
+    "review_status": "approved",
+    "draft_status": "not_attempted",
+    "task_status": "incomplete",
+    "run_status_last": "incomplete",
+    "published": false,
+    "drafts_active": 0
+  }
+}

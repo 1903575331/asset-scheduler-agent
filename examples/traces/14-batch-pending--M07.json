@@ -1,0 +1,175 @@
+{
+  "run": {
+    "run_id": "run-afab97a135c4",
+    "request": {
+      "request_id": "r-14-batch::M07",
+      "asset_ids": [
+        "M07"
+      ],
+      "user_message": "把待处理素材都排一下。",
+      "mode": "asset",
+      "limit": 1,
+      "source": "14-batch-pending"
+    },
+    "model": "offline-policy-mock",
+    "started_at": "2026-10-28T08:46:06+00:00",
+    "finished_at": "2026-10-28T08:46:06+00:00",
+    "duration_ms": 4,
+    "status": "completed",
+    "status_reason": "草稿 draft-8fb68a89a3 已保存，但存在待确认项（促销/敏感词（R-SENS-01）：命中词：限时秒杀；需人工确认后发布。），未发布，等待用户确认。",
+    "limits": {
+      "max_steps": 14,
+      "max_tool_calls": 16,
+      "steps_used": 7,
+      "tool_calls_used": 6
+    },
+    "steps": [
+      {
+        "index": 1,
+        "reason": "尚未读取素材 M07 的元数据与发布要求，先补全事实。",
+        "action": "tool",
+        "tool": "get_asset",
+        "args": {
+          "asset_id": "M07"
+        },
+        "result_ok": true,
+        "result_summary": "读取素材 M07（限时活动预告 15s 竖版，video）；缺失字段：无",
+        "error_code": null,
+        "duration_ms": 0,
+        "next_action": "调用 check_review_rules"
+      },
+      {
+        "index": 2,
+        "reason": "排期前先按规则检查风险。",
+        "action": "tool",
+        "tool": "check_review_rules",
+        "args": {
+          "asset_id": "M07"
+        },
+        "result_ok": true,
+        "result_summary": "审核检查：阻断 0 项；待确认 1 项（R-SENS-01）",
+        "error_code": null,
+        "duration_ms": 0,
+        "next_action": "调用 query_publish_slots"
+      },
+      {
+        "index": 3,
+        "reason": "需要确认 2026-11-05 抖音 的实际占用情况，不能凭要求时间直接排期。",
+        "action": "tool",
+        "tool": "query_publish_slots",
+        "args": {
+          "date": "2026-11-05",
+          "channel": "抖音",
+          "asset_id": "M07"
+        },
+        "result_ok": true,
+        "result_summary": "时段查询 2026-11-05 抖音：占用 无；可用 10:00, 11:00, 12:00, 13:00, 14:00, 15:00, 16:00, 17:00, 18:00, 19:00, 20:00, 21:00",
+        "error_code": null,
+        "duration_ms": 0,
+        "next_action": "调用 save_schedule_draft"
+      },
+      {
+        "index": 4,
+        "reason": "请求时段 14:00 空闲，按用户要求保存草稿。",
+        "action": "tool",
+        "tool": "save_schedule_draft",
+        "args": {
+          "asset_id": "M07",
+          "date": "2026-11-05",
+          "time": "14:00",
+          "channel": "抖音",
+          "decision_note": "请求时段 14:00 空闲，按用户要求保存草稿。",
+          "open_questions": []
+        },
+        "result_ok": false,
+        "result_summary": "DRAFT_STORE_TIMEOUT: 草稿存储超时（模拟故障，重试可成功）。",
+        "error_code": "DRAFT_STORE_TIMEOUT",
+        "duration_ms": 1,
+        "next_action": "调用 save_schedule_draft"
+      },
+      {
+        "index": 5,
+        "reason": "保存失败属于可重试的存储错误，重试一次；若仍失败则如实报告。",
+        "action": "tool",
+        "tool": "save_schedule_draft",
+        "args": {
+          "asset_id": "M07",
+          "date": "2026-11-05",
+          "time": "14:00",
+          "channel": "抖音",
+          "decision_note": "上次保存失败，重试保存草稿（2026-11-05 14:00）。",
+          "open_questions": []
+        },
+        "result_ok": true,
+        "result_summary": "保存草稿 draft-8fb68a89a3（2026-11-05 14:00 抖音）；确认状态=pending_confirmation",
+        "error_code": null,
+        "duration_ms": 2,
+        "next_action": "调用 get_schedule_draft"
+      },
+      {
+        "index": 6,
+        "reason": "草稿已保存，读取一次以核验状态与确认标记。",
+        "action": "tool",
+        "tool": "get_schedule_draft",
+        "args": {
+          "draft_id": "draft-8fb68a89a3"
+        },
+        "result_ok": true,
+        "result_summary": "读取草稿 draft-8fb68a89a3：状态=draft，确认状态=pending_confirmation",
+        "error_code": null,
+        "duration_ms": 0,
+        "next_action": "结束"
+      },
+      {
+        "index": 7,
+        "reason": "草稿 draft-8fb68a89a3 已保存，但存在待确认项（促销/敏感词（R-SENS-01）：命中词：限时秒杀；需人工确认后发布。），未发布，等待用户确认。",
+        "action": "finish",
+        "tool": null,
+        "args": {},
+        "result_ok": null,
+        "result_summary": "结束：草稿 draft-8fb68a89a3 已保存，但存在待确认项（促销/敏感词（R-SENS-01）：命中词：限时秒杀；需人工确认后发布。），未发布，等待用户确认。",
+        "error_code": null,
+        "duration_ms": 0,
+        "next_action": "结束（completed）"
+      }
+    ],
+    "assets": [
+      {
+        "asset_id": "M07",
+        "title": "限时活动预告 15s 竖版",
+        "review_status": "needs_confirmation",
+        "risk_reasons": [
+          {
+            "rule_id": "R-SENS-01",
+            "name": "促销/敏感词",
+            "severity": "warn",
+            "message": "标题或备注命中促销词/敏感词时，需人工确认后再发布。",
+            "evidence": {
+              "matched_words": [
+                "限时秒杀"
+              ]
+            }
+          }
+        ],
+        "suggested_slot": {
+          "date": "2026-11-05",
+          "time": "14:00",
+          "channel": "抖音"
+        },
+        "pending_confirmations": [
+          "促销/敏感词（R-SENS-01）：命中词：限时秒杀；需人工确认后发布。"
+        ],
+        "draft_status": "saved",
+        "draft_id": "draft-8fb68a89a3",
+        "draft_error": null,
+        "task_status": "completed_pending_confirmation",
+        "status_reason": "草稿 draft-8fb68a89a3 已保存，待用户确认后发布。",
+        "published": false,
+        "steps_used": 7,
+        "tool_calls": 6
+      }
+    ],
+    "discovered_assets": [],
+    "published": false
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "description": "仅用于演示/测试的故障注入配置：按素材 ID 与工具名配置失败次数。不影响正常数据。",
+  "faults": {
+    "M05": {
+      "save": {
+        "fail_times": 99,
+        "retryable": false,
+        "code": "DRAFT_STORE_UNAVAILABLE",
+        "message": "草稿存储不可用（模拟故障）。"
+      }
+    },
+    "M07": {
+      "save": {
+        "fail_times": 1,
+        "retryable": true,
+        "code": "DRAFT_STORE_TIMEOUT",
+        "message": "草稿存储超时（模拟故障，重试可成功）。"
+      }
+    },
+    "M10": {
+      "slots": {
+        "fail_times": 99,
+        "retryable": false,
+        "code": "SLOT_SERVICE_ERROR",
+        "message": "时段服务不可用（模拟故障）。"
+      }
+    }
+  }
+}

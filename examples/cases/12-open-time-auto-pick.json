@@ -1,0 +1,25 @@
+{
+  "case_id": "12-open-time-auto-pick",
+  "title": "open 要求：Agent 自行选择当天最早可用时段",
+  "acceptance": [
+    "正常排期"
+  ],
+  "request": {
+    "request_id": "r-12-open",
+    "asset_ids": [
+      "M08"
+    ],
+    "user_message": "M08 这周发就行，你定时间。"
+  },
+  "expect": {
+    "assets_count": 1,
+    "review_status": "approved",
+    "draft_status": "saved",
+    "suggested_date": "2026-11-05",
+    "suggested_time": "10:00",
+    "task_status": "completed",
+    "published": false,
+    "drafts_active": 1,
+    "pending_count": 0
+  }
+}

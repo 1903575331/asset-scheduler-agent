@@ -1,0 +1,23 @@
+{
+  "case_id": "02-missing-info",
+  "title": "素材信息缺失：先补信息再排期",
+  "acceptance": [
+    "素材信息缺失"
+  ],
+  "request": {
+    "request_id": "r-02-missing",
+    "asset_ids": [
+      "M02"
+    ],
+    "user_message": "M02 排一下，时间看着办。"
+  },
+  "expect": {
+    "assets_count": 1,
+    "review_status": "needs_input",
+    "draft_status": "not_attempted",
+    "task_status": "needs_input",
+    "published": false,
+    "drafts_active": 0,
+    "pending_contains": "请补充素材信息"
+  }
+}

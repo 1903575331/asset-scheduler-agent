@@ -1,0 +1,27 @@
+{
+  "case_id": "04-slot-conflict-confirm",
+  "title": "时段冲突：18:00 被占用 → 建议 19:00 并待确认（参考实例）",
+  "acceptance": [
+    "时段冲突",
+    "确认边界",
+    "不得称为已发布"
+  ],
+  "request": {
+    "request_id": "r-04-conflict",
+    "asset_ids": [
+      "M01"
+    ],
+    "user_message": "M01 必须今天 18:00 抖音发。"
+  },
+  "expect": {
+    "assets_count": 1,
+    "review_status": "approved",
+    "draft_status": "saved",
+    "suggested_date": "2026-11-02",
+    "suggested_time": "19:00",
+    "task_status": "completed_pending_confirmation",
+    "published": false,
+    "drafts_active": 1,
+    "pending_contains": "是否同意改为 19:00"
+  }
+}
